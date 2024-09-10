@@ -1,0 +1,54 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.header {
+  background-color: #001F3F;
+  padding: 20px;
+  color: white;
+}
+
+.about-section {
+  margin: 20px 0;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.step {
+  width: 30%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: #001F3F;
+}
+
+.btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #00C851;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #007E33;
+}
