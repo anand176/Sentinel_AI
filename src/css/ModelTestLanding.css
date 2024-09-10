@@ -1,0 +1,88 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+ 
+.top-container {
+    background-color: #4f00ec;
+    color: white;
+    text-align: left;
+    padding: 10px 20px;
+    flex: 0 0 30px; /* Small height */
+}
+ 
+.bottom-container {
+    background-color: #4f00ec;
+    flex: 0 0 30px; /* Very small bottom container */
+}
+ 
+.upload-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Adjusted padding */
+    border: 2px solid #007BFF;
+    border-radius: 10px;
+    margin: 20px;
+}
+ 
+.upload-heading {
+    margin-bottom: 5px; /* Less margin to make it close to the box */
+    color: #4c02f8; /* Customize color of the heading */
+    font-size: 24px;
+}
+ 
+.upload-box {
+    width: 400px;
+    padding: 30px;
+    border: 2px dashed #007BFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+ 
+.upload-box p {
+    margin: 10px 0;
+}
+ 
+.upload-box.drag-active {
+    border-color: #00FF00;
+    background-color: rgba(0, 255, 0, 0.1);
+}
+ 
+.browse-files-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+ 
+.browse-files-btn:hover {
+    background-color: #218838;
+}
+ 
+/* Styles for the Start Test button */
+.start-test-btn {
+    background-color: #0dee79;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 50px; /* Makes the button oval */
+    cursor: pointer;
+    margin-top: 20px; /* Space between the box and the button */
+    border: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+ 
+.start-test-btn:hover {
+    background-color: #e0a800;
+}

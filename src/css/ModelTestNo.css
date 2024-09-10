@@ -1,0 +1,60 @@
+/* Import the Jost font */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap');
+
+/* Global page styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Jost', sans-serif; /* Updated to Jost font */
+}
+
+.model-test-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.header {
+  background-color: #021A5A; /* Updated to primary darkblue */
+  padding: 20px;
+  color: white;
+}
+
+.model-test-section {
+  margin-top: 30px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #021A5A; /* Updated to primary darkblue */
+}
+
+.test-result-box {
+  background-color: #f0f8ff; /* Light background retained */
+  padding: 50px;
+  margin: 20px auto;
+  border-radius: 8px;
+  width: 60%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.result-message {
+  font-size: 28px;
+  color: #021A5A; /* Updated to primary darkblue */
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.test-button {
+  padding: 12px 20px;
+  background-color: #00B15C; /* Updated to green color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; /* Adjusted font size for consistency */
+}
+
+.test-button:hover {
+  background-color: #007E33; /* Darker green for hover effect */
+}
