@@ -1,8 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './../css/LandingPage.css';
 
 function LandingPage() {
+  const navigate = useNavigate();
+
+  const handleTrainClick = () => {
+    navigate('/modeltrainlanding');
+  };
+  const handleTestClick = () => {
+    navigate('/modeltestlanding');
+  };
+
   return (
     <div className="landing-page">
       <header className="header">
@@ -29,7 +38,7 @@ function LandingPage() {
             <div className="step-right">
               <h3>TRAINING</h3>
               <p>Upload your dataset as Zip file and start the training.</p>
-              <button className="btn">Train Data</button>
+              <button className="btn" onClick={handleTrainClick}>Train Data</button>
             </div>
           </div>
 
@@ -42,9 +51,7 @@ function LandingPage() {
             <div className="step-right">
               <h3>TEST</h3>
               <p>Upload a known anomaly video to test the model accuracy.</p>
-              <Link to="/model-test">
-                <button className="btn">Test Data</button>
-              </Link>
+              <button className="btn" onClick={handleTestClick}>Test Data</button>
             </div>
           </div>
 

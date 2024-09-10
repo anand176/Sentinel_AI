@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './../css/ModelTrain.css';
- 
-function App() {
+
+function ModelTrain() {
   const [dragActive, setDragActive] = useState(false);
- 
+  const navigate = useNavigate();
+
   // Handle drag events
   const handleDrag = (e) => {
     e.preventDefault();
@@ -14,7 +16,7 @@ function App() {
       setDragActive(false);
     }
   };
- 
+
   // Handle drop event
   const handleDrop = (e) => {
     e.preventDefault();
@@ -23,25 +25,25 @@ function App() {
     const files = e.dataTransfer.files;
     console.log(files);  // handle the files as needed
   };
- 
+
   // Handle manual file selection
   const handleFileSelection = (e) => {
     const files = e.target.files;
     console.log(files);  // handle the files as needed
   };
- 
-  // Handle start test button click
-  const handleStartTest = () => {
-    console.log('Start Test button clicked');  // Add functionality here
+
+  // Handle start train button click
+  const handleStartTrain = () => {
+    navigate('/progress'); // Navigate to the /progress route
   };
- 
+
   return (
     <div className="app-container">
       {/* Top container */}
       <div className="top-container">
         <h1>Sentinel AI By Abilytics</h1>
       </div>
- 
+
       {/* Wrapping container for the Upload Data box */}
       <div className="upload-container">
         <h2 className="upload-heading">Upload Data</h2>
@@ -65,17 +67,17 @@ function App() {
             style={{ display: 'none' }}
           />
         </div>
- 
-        {/* Start Test button outside the upload-box */}
-        <button className="start-test-btn" onClick={handleStartTest}>
+
+        {/* Start Train button outside the upload-box */}
+        <button className="start-test-btn" onClick={handleStartTrain}>
           Start Train
         </button>
       </div>
- 
+
       {/* Bottom container */}
       <div className="bottom-container"></div>
     </div>
   );
 }
- 
-export default App;
+
+export default ModelTrain;
