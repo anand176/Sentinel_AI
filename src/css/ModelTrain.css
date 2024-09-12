@@ -5,7 +5,7 @@
 }
  
 .top-container {
-    background-color: #4f00ec;
+    background-color: #021A5A;
     color: white;
     text-align: left;
     padding: 10px 20px;
@@ -13,7 +13,7 @@
 }
  
 .bottom-container {
-    background-color: #4f00ec;
+    background-color: #021A5A;
     flex: 0 0 30px; /* Very small bottom container */
 }
  
@@ -31,7 +31,7 @@
  
 .upload-heading {
     margin-bottom: 5px; /* Less margin to make it close to the box */
-    color: #4c02f8; /* Customize color of the heading */
+    color: #021A5A; /* Customize color of the heading */
     font-size: 24px;
 }
  

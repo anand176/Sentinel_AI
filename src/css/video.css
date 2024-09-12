@@ -1,0 +1,116 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+}
+
+/* Container for the entire app */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Top container */
+.top-container {
+  background-color: #021A5A;
+  color: white;
+  text-align: left;
+  padding: 10px 20px;
+  flex: 0 0 50px;
+}
+
+/* Bottom container */
+.bottom-container {
+  background-color: #021A5A;
+  flex: 0 0 30px; /* Very small bottom container */
+}
+
+/* Narration container */
+.narration-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Model Test Heading */
+.model-test-heading {
+  font-size: 24px;
+  color: #021A5A;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+/* Anomaly Detection Box */
+.anomaly-detection-box {
+  width: 80%;
+  max-width: 600px;
+  padding: 30px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+/* Anomaly Detection Title */
+.anomaly-detection-title {
+  font-size: 18px;
+  color: #021A5A;
+  margin-bottom: 20px;
+}
+
+/* Video container */
+.video-container {
+  margin: 20px 0;
+}
+
+/* Placeholder for video snippet */
+.video-placeholder {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #007BFF;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #888;
+}
+
+/* Narration result */
+.narration-result {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Placeholder for narration */
+.narration-placeholder {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* Styles for the Test Data button */
+.start-test-btn {
+  background-color: #0dee79;
+  color: white;
+  padding: 10px 40px;
+  border-radius: 50px; /* Makes the button oval */
+  cursor: pointer;
+  margin-top: 20px; /* Space between the box and the button */
+  border: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.start-test-btn:hover {
+  background-color: #e0a800;
+}

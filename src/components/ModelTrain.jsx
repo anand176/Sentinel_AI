@@ -1,81 +1,83 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './../css/ModelTrain.css';
+import axios from 'axios';
 
 function ModelTrain() {
-  const [dragActive, setDragActive] = useState(false);
-  const navigate = useNavigate();
+  const [isProcessing, setIsProcessing] = useState(false); // State to track processing
+  const [status, setStatus] = useState(''); // Status message
+  const navigate = useNavigate(); // Use navigate to route to the /video page
 
-  // Handle drag events
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
+  // Function to handle the test data processing
+  const handleTestData = async () => {
+    setIsProcessing(true); // Set processing state to true
+    setStatus('Processing video... Please wait.');
+
+    try {
+      // Simulate or make API request to start processing the uploaded video
+      const response = await axios.post('http://127.0.0.1:5001/upload_video', {
+        // Include file data or other necessary payload here
+        // For example, if you have a file input for video upload, include it in the request
+      });
+
+      if (response.status === 200) {
+        setStatus('Processing completed, obtaining narration...');
+        
+        // After the video is processed, request the narration from the /narration endpoint
+        const narrationResponse = await axios.get('http://127.0.0.1:5001/narration');
+        
+        if (narrationResponse.status === 200) {
+          setStatus('Narration obtained, redirecting...');
+          
+          // Redirect to the /video page once the narration is obtained
+          setTimeout(() => {
+            navigate('/video'); // Navigate to the video page after successful processing
+          }, 1000); // Add a short delay before routing
+        } else {
+          setStatus('Error obtaining narration. Please try again.');
+        }
+      } else {
+        setStatus('Error processing video. Please try again.');
+      }
+    } catch (error) {
+      setStatus('Error processing video. Please check the backend or network connection.');
+      console.error('Error processing video:', error);
     }
-  };
 
-  // Handle drop event
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    const files = e.dataTransfer.files;
-    console.log(files);  // handle the files as needed
-  };
-
-  // Handle manual file selection
-  const handleFileSelection = (e) => {
-    const files = e.target.files;
-    console.log(files);  // handle the files as needed
-  };
-
-  // Handle start train button click
-  const handleStartTrain = () => {
-    navigate('/progress'); // Navigate to the /progress route
+    setIsProcessing(false); // Reset processing state after completion
   };
 
   return (
     <div className="app-container">
-      {/* Top container */}
-      <div className="top-container">
-        <h1>Sentinel AI By Abilytics</h1>
-      </div>
+      <header className="app-header">
+        <h1>SentinelAI by Abilytics</h1>
+      </header> 
+      
+      <main className="main-content">
+        <h2 className="model-title">MODEL TEST</h2>
 
-      {/* Wrapping container for the Upload Data box */}
-      <div className="upload-container">
-        <h2 className="upload-heading">Upload Data</h2>
-        <div
-          className={`upload-box ${dragActive ? 'drag-active' : ''}`}
-          onDragEnter={handleDrag}
-          onDragOver={handleDrag}
-          onDragLeave={handleDrag}
-          onDrop={handleDrop}
-        >
-          <p>Drag & Drop your files here</p>
-          <p>or</p>
-          <label htmlFor="file-upload" className="browse-files-btn">
-            Browse Files
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            multiple
-            onChange={handleFileSelection}
-            style={{ display: 'none' }}
-          />
+        <div className="upload-container">
+          <h3 className="upload-title">Upload Test Video</h3>
+          <div className="upload-box">
+            <div className="upload-instructions">
+              <p>Drag and drop a video here</p>
+              <p>or</p>
+              <button className="browse-button">Browse Files</button>
+            </div>
+            <p className="file-types">Supported File types: Mp4, MOV, AVI, WebM</p>
+          </div>
+
+          <button 
+            className="test-data-button" 
+            onClick={handleTestData}
+            disabled={isProcessing} // Disable button while processing
+          >
+            {isProcessing ? 'Processing...' : 'Test Data'}
+          </button>
         </div>
 
-        {/* Start Train button outside the upload-box */}
-        <button className="start-test-btn" onClick={handleStartTrain}>
-          Start Train
-        </button>
-      </div>
-
-      {/* Bottom container */}
-      <div className="bottom-container"></div>
+        {status && <p className="status-message">{status}</p>} {/* Display status messages */}
+      </main>
     </div>
   );
 }
