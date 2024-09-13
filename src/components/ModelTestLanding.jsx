@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';  
 import './../css/ModelTestLanding.css';
 
 function App() {
   const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);
-  const [uploadMessage, setUploadMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);  // Track processing state
   const [fileName, setFileName] = useState('');  // State for storing the filename
   const navigate = useNavigate();  // React Router's hook for navigation
@@ -31,7 +30,8 @@ function App() {
       setSelectedFiles(files);  // Store selected files
       setFileName(files[0].name); // Update filename
     } else {
-      setUploadMessage('Please upload a valid video file');
+      // If you need to display a message about invalid files, uncomment the line below:
+      // setUploadMessage('Please upload a valid video file');
     }
   };
 
@@ -42,7 +42,8 @@ function App() {
       setSelectedFiles(files);  // Store selected files
       setFileName(files[0].name); // Update filename
     } else {
-      setUploadMessage('Please upload a valid video file');
+      // If you need to display a message about invalid files, uncomment the line below:
+      // setUploadMessage('Please upload a valid video file');
     }
   };
 
@@ -59,23 +60,17 @@ function App() {
       });
 
       if (response.ok) {
-        const result = await response.json();
-        setUploadMessage(result.message || 'Video uploaded successfully');
-
-        // Delay the navigation to /video for 1 minute (60,000 milliseconds)
-        setTimeout(() => {
-          setUploadMessage('Redirecting to video...');
-          setTimeout(() => {
-            navigate('/video');  // Redirect to /video route
-          }, 1000);  // Add a short delay before navigation to display the message
-        }, 40000);  // 1 minute delay before navigating to /video
+        // Navigate to /progress1 immediately after file upload initiation
+        navigate('/progress1');
       } else {
-        setUploadMessage('Error uploading video');
-        setIsProcessing(false);  // Stop processing in case of error
+        // If you need to display an error message, uncomment the line below:
+        // setUploadMessage('Error uploading video');
       }
     } catch (error) {
-      setUploadMessage('Error uploading video: ' + error.message);
-      setIsProcessing(false);  // Stop processing in case of error
+      // If you need to display an error message, uncomment the line below:
+      // setUploadMessage('Error uploading video: ' + error.message);
+    } finally {
+      setIsProcessing(false);  // Stop processing
     }
   };
 
@@ -84,7 +79,8 @@ function App() {
     if (selectedFiles && selectedFiles.length > 0) {
       Array.from(selectedFiles).forEach((file) => uploadFile(file));
     } else {
-      setUploadMessage('Please select a video file first');
+      // If you need to display a message about no file selected, uncomment the line below:
+      // setUploadMessage('Please select a video file first');
     }
   };
 
@@ -92,11 +88,11 @@ function App() {
     <div className="app-container">
       {/* Top container */}
       <div className="top-container">
-        <h1>Sentinel AI By Abilytics</h1>
+        <h1>SentinelAI By Abilytics</h1>
       </div>
 
       {/* Heading for Model Test */}
-      <div className="model-test-heading">
+      <div className="model-test-heading2">
         <h2>MODEL TEST</h2>
       </div>
 
@@ -104,7 +100,7 @@ function App() {
       <div className='uploadContainer'>
         <div className="upload-container">
           <h2 className="upload-heading">Upload Test Video</h2>
-          <p className="instruction-text">Please upload a video to start the model test (supported formats: MP4, MOV, AVI, WebM).</p>
+          <p className="instruction-text">Supported formats: MP4, MOV, AVI, WebM.</p>
           <div
             className={`upload-box ${dragActive ? 'drag-active' : ''}`}
             onDragEnter={handleDrag}
@@ -127,8 +123,8 @@ function App() {
             />
           </div>
 
-          {/* Display selected file name */}
-          {fileName && <p className="file-name">Selected File: {fileName}</p>}
+          {/* Display selected file name in bold and highlighted */}
+          {fileName && <p className="file-name highlighted">Selected File: {fileName}</p>}
 
           {/* Start Test button outside the upload-box */}
           <button
@@ -138,12 +134,8 @@ function App() {
           >
             {isProcessing ? 'Processing...' : 'Start Test'}
           </button>
-
-          {/* Message Display */}
-          {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
         </div>
       </div>
-      
 
       {/* Bottom container */}
       <div className="bottom-container"></div>

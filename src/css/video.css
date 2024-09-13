@@ -1,7 +1,7 @@
 /* Global Styles */
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Jost';
   background-color: #f7f7f7;
 }
 
@@ -10,6 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  justify-content: space-between; /* Ensure bottom container is positioned at the bottom */
 }
 
 /* Top container */
@@ -22,62 +23,52 @@ body {
 }
 
 /* Bottom container */
-.bottom-container {
+.bottom-container3 {
   background-color: #021A5A;
-  flex: 0 0 30px; /* Very small bottom container */
+  height: 50px;
+  width: 100%;
+  flex-shrink: 0;
 }
 
-/* Narration container */
-.narration-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-/* Model Test Heading */
-.model-test-heading {
-  font-size: 24px;
+/* Anomaly Detection Heading */
+.anomaly-detection-heading {
+  text-align: center;
+  font-size: 26px; /* Increased font size */
   color: #021A5A;
-  margin-bottom: 30px;
   font-weight: bold;
+  margin: 20px 0; /* Space between heading and the shadow container */
 }
 
-/* Anomaly Detection Box */
-.anomaly-detection-box {
-  width: 80%;
-  max-width: 600px;
-  padding: 30px;
+/* Video shadow container */
+.video-shadow-container {
+  width: 70%; /* Reduced width for smaller size */
+  max-width: 500px; /* Adjusted for video size */
+  margin: 0 auto;
+  padding: 20px;
   background-color: #f7f7f7;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Reduced shadow size */
   text-align: center;
   border: 1px solid #ccc;
-}
-
-/* Anomaly Detection Title */
-.anomaly-detection-title {
-  font-size: 18px;
-  color: #021A5A;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Video container */
 .video-container {
-  margin: 20px 0;
+  margin-bottom: 10px; /* Reduced margin for more compact layout */
 }
 
 /* Placeholder for video snippet */
 .video-placeholder {
-  height: 300px;
+  height: 250px; /* Smaller height for video placeholder */
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px dashed #007BFF;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #888;
 }
 
@@ -88,29 +79,29 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-/* Placeholder for narration */
-.narration-placeholder {
-  color: #888;
-  margin-bottom: 20px;
+/* Styles for the buttons */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-/* Styles for the Test Data button */
-.start-test-btn {
-  background-color: #0dee79;
+.start-test-btn1 {
+  background-color: #00B15C;
   color: white;
   padding: 10px 40px;
   border-radius: 50px; /* Makes the button oval */
   cursor: pointer;
-  margin-top: 20px; /* Space between the box and the button */
+  margin-top: 10px; /* Ensure button is clearly visible */
   border: none;
   font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
-.start-test-btn:hover {
-  background-color: #e0a800;
+.start-test-btn1:hover {
+  background-color: #00B15C;
 }

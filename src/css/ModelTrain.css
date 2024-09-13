@@ -2,43 +2,79 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    justify-content: space-between;
+    font-family: Jost;
 }
- 
+
 .top-container {
     background-color: #021A5A;
     color: white;
+    
     text-align: left;
     padding: 10px 20px;
-    flex: 0 0 30px; /* Small height */
+    flex: 0 0 40px; /* Increased height for better readability */
 }
- 
+
+.title {
+    margin-left: 0; /* Align text to the left within the top container */
+}
+
 .bottom-container {
     background-color: #021A5A;
     flex: 0 0 30px; /* Very small bottom container */
 }
- 
+
+.main-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.model-train-heading {
+    text-align: center;
+    margin: 20px 0;
+    color: #021A5A;
+    font-size: 28px;
+    text-decoration: underline;
+    padding: 0;
+    line-height: 1.2;
+}
+
 .upload-container {
-    flex: 1;
+    width: 80%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 1px solid #ccc;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0; /* Adjusted padding */
-    border: 2px solid #007BFF;
-    border-radius: 10px;
-    margin: 20px;
 }
- 
+
 .upload-heading {
-    margin-bottom: 5px; /* Less margin to make it close to the box */
-    color: #021A5A; /* Customize color of the heading */
+    margin-bottom: 10px;
+    color: #021A5A;
     font-size: 24px;
 }
- 
+
+.instruction-text {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
 .upload-box {
     width: 400px;
-    padding: 30px;
-    border: 2px dashed #007BFF;
+    padding: 20px;
+    border: 2px dashed grey;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -46,43 +82,60 @@
     align-items: center;
     text-align: center;
 }
- 
+
 .upload-box p {
     margin: 10px 0;
 }
- 
+
 .upload-box.drag-active {
-    border-color: #00FF00;
+    border-color: #00B15C;
     background-color: rgba(0, 255, 0, 0.1);
 }
- 
+
 .browse-files-btn {
     display: inline-block;
-    background-color: #28a745;
+    background-color: #00B15C;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
 }
- 
+
 .browse-files-btn:hover {
-    background-color: #218838;
+    background-color: #00A14C;
 }
- 
-/* Styles for the Start Test button */
-.start-test-btn {
-    background-color: #0dee79;
+
+.start-train-btn {
+    background-color: #00B15C;
     color: white;
     padding: 10px 40px;
-    border-radius: 50px; /* Makes the button oval */
+    border-radius: 50px;
     cursor: pointer;
-    margin-top: 20px; /* Space between the box and the button */
+    margin-top: 20px;
     border: none;
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
- 
-.start-test-btn:hover {
-    background-color: #e0a800;
+
+.start-train-btn:hover {
+    background-color: #00A14C;
+}
+
+.upload-message {
+    margin-top: 20px;
+    color: #ff0000;
+}
+
+.file-name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.highlighted {
+    background-color: #e0f7fa;
+    padding: 5px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #021A5A;
 }

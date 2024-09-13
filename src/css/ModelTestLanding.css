@@ -4,11 +4,14 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    justify-content: space-between;
+    font-family: Jost;
 }
 
 .top-container {
     background-color: #021A5A;
     color: white;
+    
     text-align: left;
     padding: 10px 20px;
     flex: 0 0 40px; /* Increased height for better readability */
@@ -20,32 +23,39 @@
 }
 
 /* New Model Test heading styling */
-.model-test-heading {
+/* .model-test-heading2 {
     text-align: center;
-    margin: 20px 0;
+    margin: 20px 0px 0px 0px;
     color: #021A5A;
 }
+
+.model-test-heading2 h2{
+    font-size: 35px;
+    margin-bottom: 0px;
+} */
 
 .uploadContainer{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
 .upload-container {
-    flex: 0.5           ;
+    width: 80%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: #f0f8ff; /* Matching narration box background */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Similar shadow effect */
+    text-align: center;
+    border: 1px solid #ccc; /* Light border similar to narration container */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px; /* Adjusted padding */
-    border: 2px solid #007BFF;
-    border-radius: 5px;
-    margin: 20px;
-    justify-self: center;
 }
+
 
 .upload-heading {
     margin-bottom: 10px; /* Reduced margin for closeness */
@@ -62,7 +72,7 @@
 .upload-box {
     width: 400px;
     padding: 20px;
-    border: 2px dashed #007BFF;
+    border: 2px dashed grey;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -76,13 +86,13 @@
 }
 
 .upload-box.drag-active {
-    border-color: #00FF00;
+    border-color:#00B15C;
     background-color: rgba(0, 255, 0, 0.1);
 }
 
 .browse-files-btn {
     display: inline-block;
-    background-color: #28a745;
+    background-color: #00B15C;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -91,12 +101,12 @@
 }
 
 .browse-files-btn:hover {
-    background-color: #218838;
+    background-color: #00B15C;
 }
 
 /* Styles for the Start Test button */
 .start-test-btn {
-    background-color: #0dee79;
+    background-color: #00B15C;
     color: white;
     padding: 10px 40px;
     border-radius: 50px; /* Makes the button oval */
@@ -108,10 +118,40 @@
 }
 
 .start-test-btn:hover {
-    background-color: #e0a800;
+    background-color: #00B15C;
 }
 
 .upload-message {
     margin-top: 20px;
     color: #ff0000;
 }
+.model-test-heading2 {
+    text-align: center;
+    margin: 20px 0;
+    color: #021A5A;
+}
+
+.model-test-heading2 h2 {
+    font-size: 28px; /* Adjust font size */
+    margin-bottom: 0px;
+    text-decoration: underline; /* Only use text-decoration for underline */
+    padding: 0;
+    line-height: 1.2; /* Ensures proper spacing */
+}
+
+/* Highlight and bold selected file name */
+.file-name {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .highlighted {
+    background-color: #e0f7fa; /* Light blue background */
+    padding: 5px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #021A5A; /* Dark greenish text color */
+  }
+  
+
+

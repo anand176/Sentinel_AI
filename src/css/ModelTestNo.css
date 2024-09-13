@@ -5,7 +5,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Jost', sans-serif; /* Updated to Jost font */
+  font-family: 'Jost'; /* Updated to Jost font */
 }
 
 .model-test-page {
@@ -58,3 +58,12 @@ body {
 .test-button:hover {
   background-color: #007E33; /* Darker green for hover effect */
 }
+.bottom-container4 { 
+  background-color: #021A5A;
+  flex: 0 0 30px; /* Very small bottom container */
+  width: 100%; /* Ensures it stretches across the entire width */
+  height: 30px; /* Sets the height */
+  position: absolute;
+  bottom: 0;
+}
+

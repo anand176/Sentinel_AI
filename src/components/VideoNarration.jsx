@@ -24,8 +24,12 @@ function VideoNarration() {
 
   // Handle button click to test with another video
   const handleTestAnotherVideo = () => {
-    // Implement the logic to test with another video, e.g., navigate to an upload page
-    window.location.href = '/modeltestlanding';  // Redirect to the homepage or upload page
+    window.location.href = '/modeltestlanding';  // Redirect to the test page
+  };
+
+  // Handle button click to go back to the homepage
+  const handleBackToHome = () => {
+    window.location.href = '/';  // Redirect to the homepage
   };
 
   return (
@@ -35,37 +39,42 @@ function VideoNarration() {
         <h1>SentinelAI by Abilytics</h1>
       </div>
 
-      <div className="narration-container">
-        <h2 className="model-test-heading">MODEL TEST</h2>
-        <div className="anomaly-detection-box">
-          <h3 className="anomaly-detection-title">Anomaly Detection</h3>
-          {videoUrl ? (
-            <div className="video-container">
-              <video width="600" controls>
-                <source src={videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          ) : (
-            <div className="video-placeholder">
-              <p>&lt; ANOMALY VIDEO SNIPPET &gt;</p>
-            </div>
-          )}
-          {narration ? (
-            <div className="narration-result">
-              <p>{narration}</p>
-            </div>
-          ) : (
-            <p className="narration-placeholder">&lt; Anomaly Narration &gt;</p>
-          )}
-          <button className="start-test-btn" onClick={handleTestAnotherVideo}>
-            Test Data
+      {/* Anomaly Detection Heading */}
+      <h2 className="anomaly-detection-heading">Anomaly Detection</h2>
+
+      {/* Video and narration inside shadow container */}
+      <div className="video-shadow-container">
+        {videoUrl ? (
+          <div className="video-container">
+            <video width="500" controls>
+              <source src={videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        ) : (
+          <div className="video-placeholder">
+            <p>&lt; ANOMALY VIDEO SNIPPET &gt;</p>
+          </div>
+        )}
+        {narration && (
+          <div className="narration-result">
+            <p>{narration}</p>
+          </div>
+        )}
+
+        {/* Buttons */}
+        <div className="button-container">
+          <button className="start-test-btn1" onClick={handleTestAnotherVideo}>
+            Test with Another Video
+          </button>
+          <button className="start-test-btn1" onClick={handleBackToHome}>
+            Back to Home Page
           </button>
         </div>
       </div>
 
       {/* Bottom container */}
-      <div className="bottom-container"></div>
+      <div className="bottom-container3"></div>
     </div>
   );
 }

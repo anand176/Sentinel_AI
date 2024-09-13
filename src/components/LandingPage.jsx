@@ -1,32 +1,32 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './../css/LandingPage.css';
-
+ 
 function LandingPage() {
   const navigate = useNavigate();
-
+ 
   const handleTrainClick = () => {
     navigate('/modeltrainlanding');
   };
   const handleTestClick = () => {
     navigate('/modeltestlanding');
   };
-
+ 
   return (
     <div className="landing-page">
       <header className="header">
         <h1>SentinelAI by Abilytics</h1>
       </header>
-
+ 
       <section className="about-section">
         <h2>About</h2>
         <p>
-          SentinelAI provides a one-size-fits-all solution for CCTV video anomaly detection. 
-          Train your non-normal dataset with our model and we help you detect anything out of the ordinary 
-          in live feed or uploaded videos.
+          SentinelAI provides a one-size-fits-all solution for CCTV video anomaly detection.
+          Train your non-normal dataset with our model and we help you detect anything out of the ordinary
+          in uploaded videos.
         </p>
       </section>
-
+ 
       <section className="steps-section">
         <div className="steps-vertical">
           {/* Step 1 */}
@@ -37,11 +37,11 @@ function LandingPage() {
             </div>
             <div className="step-right">
               <h3>TRAINING</h3>
-              <p>Upload your dataset as Zip file and start the training.</p>
+              <p>Upload your dataset and start the training.</p>
               <button className="btn" onClick={handleTrainClick}>Train Data</button>
             </div>
           </div>
-
+ 
           {/* Step 2 */}
           <div className="step">
             <div className="step-left">
@@ -54,7 +54,7 @@ function LandingPage() {
               <button className="btn" onClick={handleTestClick}>Test Data</button>
             </div>
           </div>
-
+ 
           {/* Step 3 */}
           <div className="step">
             <div className="step-left">
@@ -72,5 +72,5 @@ function LandingPage() {
     </div>
   );
 }
-
+ 
 export default LandingPage;

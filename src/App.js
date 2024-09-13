@@ -9,6 +9,8 @@ import ModelTestLanding from './components/ModelTestLanding';
 // import video from './components/VideoNarration'; // Import the VideoNarration component
 import VideoNarration from './components/VideoNarration';
 
+import Progress1 from './components/Progress1';
+
 function App() {
   return (
     <Router>
@@ -27,6 +29,8 @@ function App() {
 
         {/* Route for Video Narration */}
         <Route path="/video" element={<VideoNarration />} />
+        <Route path="/progress" element={<Progress />} />
+        <Route path="/progress1" element={<Progress1 />} />
         
 
       </Routes>

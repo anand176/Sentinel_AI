@@ -1,64 +1,69 @@
-/* General styling */
 body {
   font-family: 'Jost', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f7fa;
 }
-
+ 
 .landing-page {
   text-align: center;
-  padding: 20px;
+  /* padding: 20px; */
 }
-
+ 
 .header {
   background-color: #021A5A;
-  padding: 20px;
-  color: white;
+    color: white;
+    
+    text-align: left;
+    padding: 10px 20px;
+    flex: 0 0 40px;
 }
-
+ 
 .about-section {
-  margin: 30px 0;
+  margin: 20px 0;
 }
-
+ 
 .about-section h2 {
   font-size: 24px;
   font-weight: bold;
   color: #021A5A;
 }
-
+ 
 .about-section p {
   width: 60%;
   margin: 0 auto;
   color: #555;
   font-size: 16px;
 }
-
+ 
 /* Steps section */
 .steps-section {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
+  flex-direction: column;
+  margin: 80px 0;
 }
-
+ 
 .steps-vertical {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-
+ 
 .step {
   display: flex;
-  margin-bottom: 40px; /* Spacing between steps */
+  margin-bottom: 0px; /* Spacing between steps */
 }
-
+ 
 .step-left {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-right: 30px;
+  margin-top: 0px;
 }
-
+ 
 .step-number {
   font-size: 36px;
   font-weight: bold;
@@ -71,7 +76,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+ 
 .step-connector {
   width: 2px;
   height: 100px; /* Adjust height of the dotted line */
@@ -83,23 +88,39 @@ body {
     #007CD8 8px
   );
 }
-
+ 
+.bottom{
+  width: 35%; /* Adjust the width for the length of the horizontal line */
+  height: 2px; /* Set the height to 2px */
+  background: repeating-linear-gradient(
+    90deg, /* Change the direction to horizontal */
+    transparent,
+    transparent 4px,
+    #007CD8 4px,
+    #007CD8 8px
+  );
+}
+ 
+ 
+ 
 .step-right {
   flex-grow: 1;
   text-align: left;
 }
-
+ 
 .step-right h3 {
   font-size: 20px;
   color: #021A5A;
+  margin-top:10px;
+ 
 }
-
+ 
 .step-right p {
   font-size: 14px;
   color: #555;
-  margin: 10px 0;
+  margin: 20px 0;
 }
-
+ 
 .btn {
   background-color: #00B15C;
   color: white;
@@ -109,28 +130,29 @@ body {
   cursor: pointer;
   font-size: 14px;
 }
-
+ 
 .btn:hover {
   background-color: #007E33;
 }
-
+ 
 /* Adjust layout for smaller screens */
 @media (max-width: 768px) {
   .steps-vertical {
     width: 80%;
   }
-
+ 
   .step {
     flex-direction: column;
     align-items: flex-start;
   }
-
+ 
   .step-left {
     margin-right: 0;
     margin-bottom: 20px;
   }
-
+ 
   .step-connector {
     height: 50px;
   }
 }
+ 
