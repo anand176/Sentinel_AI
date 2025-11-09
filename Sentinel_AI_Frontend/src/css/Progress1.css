@@ -1,0 +1,148 @@
+.model-training-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    padding-top: 10px; /* Add padding to ensure the content doesn't overlap with the header */
+  }
+  
+  .training-box-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+   
+  .title {
+    position: fixed; /* This keeps the title bar fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Makes sure the bar stretches across the entire page */
+    color: white;
+    background-color: #00214d;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    margin: 0;
+    z-index: 1000; /* Ensure the header is above all other content */
+  }
+   
+  .training-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    width: 450px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+  }
+   
+  .model-training {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00214d;
+    margin-bottom: 30px;
+  }
+   
+  .progress-container {
+    margin-bottom: 30px;
+  }
+   
+  .progress-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+   
+  .progress-percentage {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+   
+  .progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+   
+  .progress-bar {
+    height: 100%;
+    background-color: #ffac30;
+    transition: width 0.5s ease;
+  }
+   
+  .progress-text {
+    margin-bottom: 10px;
+    color: #666;
+  }
+   
+  .estimated-time {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+   
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+   
+  .resume-button, .stop-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+   
+  .stop-button {
+    background-color: #dc3545;
+  }
+   
+  .resume-button:disabled, .stop-button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+  }
+   
+  .resume-button:hover:not(:disabled), .stop-button:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+   
+  .progress-complete {
+    color: #4CAF50;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+   
+  .checkmark {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+   
+  .test-model-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+   
+  .test-model-button:hover {
+    background-color: #45a049;
+  }
+   
+.bottom-container {
+    background-color: #021A5A;
+    flex: 0 0 30px; /* Very small bottom container */
+}

@@ -1,0 +1,107 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Jost';
+  background-color: #f7f7f7;
+}
+
+/* Container for the entire app */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between; /* Ensure bottom container is positioned at the bottom */
+}
+
+/* Top container */
+.top-container {
+  background-color: #021A5A;
+  color: white;
+  text-align: left;
+  padding: 10px 20px;
+  flex: 0 0 50px;
+}
+
+/* Bottom container */
+.bottom-container3 {
+  background-color: #021A5A;
+  height: 50px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* Anomaly Detection Heading */
+.anomaly-detection-heading {
+  text-align: center;
+  font-size: 26px; /* Increased font size */
+  color: #021A5A;
+  font-weight: bold;
+  margin: 20px 0; /* Space between heading and the shadow container */
+}
+
+/* Video shadow container */
+.video-shadow-container {
+  width: 70%; /* Reduced width for smaller size */
+  max-width: 500px; /* Adjusted for video size */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Reduced shadow size */
+  text-align: center;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Video container */
+.video-container {
+  margin-bottom: 10px; /* Reduced margin for more compact layout */
+}
+
+/* Placeholder for video snippet */
+.video-placeholder {
+  height: 250px; /* Smaller height for video placeholder */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #007BFF;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: #888;
+}
+
+/* Narration result */
+.narration-result {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Styles for the buttons */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.start-test-btn1 {
+  background-color: #00B15C;
+  color: white;
+  padding: 10px 40px;
+  border-radius: 50px; /* Makes the button oval */
+  cursor: pointer;
+  margin-top: 10px; /* Ensure button is clearly visible */
+  border: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.start-test-btn1:hover {
+  background-color: #00B15C;
+}
