@@ -128,7 +128,10 @@ The Sentinel AI backend is a unified Flask application running on **port 5000** 
 {
   "message": "Video processed",
   "anomalies": [45, 67, 89, 102, ...],
-  "video_path": "uploads/uploaded_videos/video.mp4"
+  "video_path": "uploads/uploaded_videos/video.mp4",
+  "narration": "Unusual movement detected in the video",
+  "clip_url": "/anomalous_clips/anomalous_clip_45.mp4",
+  "clip_path": "uploads/anomalous_clips/anomalous_clip_45.mp4"
 }
 ```
 
@@ -140,7 +143,9 @@ The Sentinel AI backend is a unified Flask application running on **port 5000** 
 5. Extracts frames from video
 6. Compares each frame's reconstruction error to threshold
 7. Returns list of anomalous frame indices
-8. Frontend can then call `/narrate` with these indices
+8. **Automatically extracts 300-frame clip from first anomaly**
+9. **Automatically generates narration using Gemini API**
+10. **Returns narration + clip URL in same response**
 
 **Use Case**:
 - Real-time surveillance monitoring
@@ -228,12 +233,11 @@ GET /anomalous_clips/anomalous_clip.mp4
 ```
 1. User uploads suspicious video
 2. POST /upload with mode="detect"
-3. Backend detects anomalies → returns frame indices
-4. Frontend displays detected anomalies
-5. User clicks on anomaly
-6. POST /narrate with anomaly frame index
-7. Backend extracts 300-frame clip + generates narration
-8. Frontend displays narration + plays clip
+3. Backend detects anomalies
+4. Backend automatically extracts 300-frame clip from first anomaly
+5. Backend automatically generates narration via Gemini API
+6. Returns: anomalies + narration + clip URL in single response
+7. Frontend displays narration + plays clip immediately
 ```
 
 ---
@@ -242,28 +246,33 @@ GET /anomalous_clips/anomalous_clip.mp4
 
 ### Step 1: User uploads video
 ```
-Frontend → POST /upload → Backend saves video → Returns anomaly frames
+Frontend → POST /upload with mode="detect" → Backend saves video
 ```
 
-### Step 2: Frontend gets anomalies
+### Step 2: Backend processes everything automatically
 ```
-Frontend receives: [45, 67, 89, 102, ...]
-Frontend calls: POST /narrate with first anomaly (45)
-```
-
-### Step 3: Backend extracts and narrates
-```
+Backend detects anomalies: [45, 67, 89, 102, ...]
 Backend extracts frames 45-344 (300 frames)
-Saves to: uploads/anomalous_clips/anomalous_clip.mp4
-Uploads to Gemini API
-Receives narration: "Unusual movement detected..."
-Returns: narration + clip URL
+Backend saves to: uploads/anomalous_clips/anomalous_clip_45.mp4
+Backend uploads to Gemini API
+Backend receives narration: "Unusual movement detected..."
+```
+
+### Step 3: Backend returns complete response
+```
+{
+  "anomalies": [45, 67, 89, 102, ...],
+  "narration": "Unusual movement detected...",
+  "clip_url": "/anomalous_clips/anomalous_clip_45.mp4",
+  "clip_path": "uploads/anomalous_clips/anomalous_clip_45.mp4"
+}
 ```
 
 ### Step 4: Frontend displays results
 ```
+Frontend receives single response with everything
 Frontend displays narration text
-Frontend plays video from: GET /anomalous_clips/anomalous_clip.mp4
+Frontend plays video from: GET /anomalous_clips/anomalous_clip_45.mp4
 ```
 
 ---

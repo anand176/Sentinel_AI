@@ -29,23 +29,35 @@ def handle_upload():
 
     elif mode == "detect":
         result = detect_anomalies(path)
+        
+        if result.get("anomalies") and len(result["anomalies"]) > 0:
+            try:
+                anomaly_frames = result["anomalies"]
+                start_frame = int(anomaly_frames[0])
+                end_frame = min(start_frame + 300, start_frame + 300)
+                output_filename = f"anomalous_clip_{int(start_frame)}.mp4"
+                
+                clip_path = extract_anomalous_clip(path, start_frame, end_frame, 30, output_filename)
+                
+                if clip_path:
+                    narration = get_gemini_video_narration(clip_path)
+                    result["narration"] = narration
+                    result["clip_url"] = f"/anomalous_clips/{output_filename}"
+                    result["clip_path"] = clip_path
+                else:
+                    result["narration"] = "Failed to extract anomalous clip"
+                    result["clip_url"] = None
+            except Exception as e:
+                result["narration"] = f"Error generating narration: {str(e)}"
+                result["clip_url"] = None
+        
         return jsonify(result)
 
     return jsonify({"error": "Invalid mode"}), 400
 
 @app.route("/narrate", methods=["POST"])
 def narrate_anomalies():
-    """
-    Generate narration for anomalous clips.
     
-    Expects JSON payload:
-    {
-        "video_path": "path/to/video.mp4",
-        "anomaly_frames": [frame_indices],
-        "fps": 30,
-        "output_filename": "anomalous_clip.mp4"
-    }
-    """
     try:
         data = request.get_json()
         video_path = data.get("video_path")
@@ -56,7 +68,6 @@ def narrate_anomalies():
         if not video_path or not os.path.exists(video_path):
             return jsonify({"error": "Video file not found"}), 400
         
-        # Extract anomalous clip (first 300 frames from first anomalous frame)
         if anomaly_frames:
             start_frame = int(anomaly_frames[0])
             end_frame = min(start_frame + 300, start_frame + 300)
@@ -82,9 +93,7 @@ def narrate_anomalies():
 
 @app.route("/anomalous_clips/<filename>", methods=["GET"])
 def serve_anomalous_clip(filename):
-    """
-    Serve anomalous clip video files.
-    """
+    
     try:
         print(f"Serving anomalous clip: {filename}")
         return send_from_directory(ANOMALOUS_CLIPS_FOLDER, filename)
@@ -92,19 +101,7 @@ def serve_anomalous_clip(filename):
         return jsonify({"error": f"Failed to serve clip: {str(e)}"}), 404
 
 def extract_anomalous_clip(video_path, start_frame, end_frame, fps, output_filename):
-    """
-    Extract a clip from a video containing anomalous frames.
-    
-    Args:
-        video_path: Path to the original video
-        start_frame: Starting frame index
-        end_frame: Ending frame index
-        fps: Frames per second
-        output_filename: Name for the output clip file
-        
-    Returns:
-        Path to the extracted clip or None if failed
-    """
+
     try:
         cap = cv2.VideoCapture(video_path)
         
