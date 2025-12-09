@@ -1,18 +1,39 @@
-import requests
+import google.generativeai as genai
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+def get_gemini_video_narration(video_path):
+    """
+    Generate narration for a video using Google Gemini API.
+    
+    Args:
+        video_path: Path to the video file
+        
+    Returns:
+        Narration text describing the anomaly in the video
+    """
+    try:
+        video_file = genai.upload_file(path=video_path)
+        prompt = "Describe the possible anomaly in this video in a single sentence"
+        model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
+        response = model.generate_content([prompt, video_file], request_options={"timeout": 600})
+        genai.delete_file(video_file.name)
+        return response.text
+    except Exception as e:
+        return f"Error generating narration: {str(e)}"
 
 def call_narration_api(video_path, anomalies):
-    # Placeholder for your narration endpoint
-    url = "http://localhost:5001/narrate"  # Example endpoint
-    payload = {
-        "video_path": video_path,
-        "anomaly_frames": anomalies[:5].tolist() if len(anomalies) > 5 else anomalies.tolist()
-    }
-
-    try:
-        response = requests.post(url, json=payload)
-        if response.status_code == 200:
-            return response.json().get("narration", "No narration returned")
-        else:
-            return "Narration service error"
-    except Exception as e:
-        return f"Failed to connect to narration service: {e}"
+    """
+    Generate narration for detected anomalies in a video.
+    
+    Args:
+        video_path: Path to the video file
+        anomalies: Array of anomalous frame indices
+        
+    Returns:
+        Narration text describing the anomalies
+    """
+    return get_gemini_video_narration(video_path)
