@@ -7,6 +7,7 @@ function App() {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);  // Track processing state
   const [fileName, setFileName] = useState('');  // State for storing the filename
+  const [uploadMessage, setUploadMessage] = useState(''); // Status / error message
   const navigate = useNavigate();  // React Router's hook for navigation
 
   // Handle drag events
@@ -49,26 +50,33 @@ function App() {
 
   // Upload file to the backend server
   const uploadFile = async (file) => {
+    console.log('Starting upload for file:', file?.name);
     const formData = new FormData();
-    formData.append('file', file);
+    // Backend expects "video" and a "mode" field
+    formData.append('video', file);
+    formData.append('mode', 'detect');
 
     try {
       setIsProcessing(true);  // Start processing
-      const response = await fetch('http://127.0.0.1:5000', { // Corrected URL
+      const response = await fetch('http://127.0.0.1:5001/upload', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        // Navigate to /progress1 immediately after file upload initiation
+        const data = await response.json();
+        console.log('Upload success, response:', data);
+        // Store the detection result so the VideoNarration page can read it
+        window.localStorage.setItem('anomalyResult', JSON.stringify(data));
+        // Navigate to /progress1 after upload completes
         navigate('/progress1');
       } else {
-        // If you need to display an error message, uncomment the line below:
-        // setUploadMessage('Error uploading video');
+        console.error('Error uploading video:', response.statusText);
+        setUploadMessage('Error uploading video: ' + response.statusText);
       }
     } catch (error) {
-      // If you need to display an error message, uncomment the line below:
-      // setUploadMessage('Error uploading video: ' + error.message);
+      console.error('Error uploading video:', error);
+      setUploadMessage('Error uploading video: ' + error.message);
     } finally {
       setIsProcessing(false);  // Stop processing
     }
@@ -76,11 +84,11 @@ function App() {
 
   // Handle start test button click
   const handleStartTest = () => {
+    console.log('Start Test clicked, selectedFiles:', selectedFiles);
     if (selectedFiles && selectedFiles.length > 0) {
       Array.from(selectedFiles).forEach((file) => uploadFile(file));
     } else {
-      // If you need to display a message about no file selected, uncomment the line below:
-      // setUploadMessage('Please select a video file first');
+      setUploadMessage('Please select a video file first');
     }
   };
 
@@ -134,6 +142,9 @@ function App() {
           >
             {isProcessing ? 'Processing...' : 'Start Test'}
           </button>
+
+          {/* Upload / error message */}
+          {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
         </div>
       </div>
 

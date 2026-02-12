@@ -34,11 +34,15 @@
     margin-bottom: 0px;
 } */
 
-.uploadContainer{
+.uploadContainer {
     width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px 0;
 }
 
 .upload-container {
