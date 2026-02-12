@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './../css/video.css';  // Import custom CSS for styling
 
 function VideoNarration() {
@@ -7,19 +6,42 @@ function VideoNarration() {
   const [narration, setNarration] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
 
-  // Fetch the video and narration from the backend
+  // Load the video and narration from the last detection result
   useEffect(() => {
-    setStatus('Fetching narration and video...');
-    axios.get('http://127.0.0.1:5001/narration')
-      .then(response => {
-        setNarration(response.data.narration);
-        setVideoUrl(`http://127.0.0.1:5001/anomalous_clips1/${response.data.video}`);  // Video URL from the Flask backend
-        setStatus(''); // Clear status message after data is received
-      })
-      .catch(error => {
-        setStatus('Error fetching narration or video');
-        console.error('Error:', error);
-      });
+    setStatus('Loading detection result...');
+    try {
+      const stored = window.localStorage.getItem('anomalyResult');
+      if (!stored) {
+        setStatus('No detection result found. Please run a test first.');
+        return;
+      }
+
+      const data = JSON.parse(stored);
+
+      if (data.error) {
+        setStatus(data.error);
+        return;
+      }
+
+      if (data.narration) {
+        setNarration(data.narration);
+      }
+
+      if (data.clip_url) {
+        // Backend serves clips at /anomalous_clips/<filename> on port 5001
+        setVideoUrl(`http://127.0.0.1:5001${data.clip_url}`);
+      }
+
+      // Show status when no clip/narration (e.g. "No anomalies detected")
+      if (!data.narration && !data.clip_url && data.status) {
+        setStatus(data.status);
+      } else {
+        setStatus('');
+      }
+    } catch (error) {
+      console.error('Error loading detection result:', error);
+      setStatus('Error loading detection result.');
+    }
   }, []);
 
   // Handle button click to test with another video
@@ -56,6 +78,7 @@ function VideoNarration() {
             <p>&lt; ANOMALY VIDEO SNIPPET &gt;</p>
           </div>
         )}
+        {status && <p className="status-message">{status}</p>}
         {narration && (
           <div className="narration-result">
             <p>{narration}</p>

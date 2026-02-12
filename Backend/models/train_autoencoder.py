@@ -9,7 +9,8 @@ def train_model(video_path):
     frames = extract_frames(video_path)
     X_train, X_test = train_test_split(frames, test_size=0.2)
 
-    input_img = Input(shape=(64, 64, 1))
+    # Match the 128x128 resolution used by the existing saved model
+    input_img = Input(shape=(128, 128, 1))
 
     # Encoder
     x = Conv2D(32, (3, 3), activation='relu', padding='same')(input_img)

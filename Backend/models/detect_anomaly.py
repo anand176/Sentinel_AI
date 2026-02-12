@@ -5,10 +5,12 @@ from utils.narration_client import call_narration_api
 import os
 
 def detect_anomalies(video_path):
+    # Prefer trained model from train flow; fallback to existing complex model
     model_path = "models/saved_models/autoencoder_video1.h5"
-
     if not os.path.exists(model_path):
-        return {"error": "No trained model found. Please train first."}
+        model_path = "models/saved_models/autoencoder_video_complex.h5"
+    if not os.path.exists(model_path):
+        return {"error": "No trained model found. Please train first.", "status": "Error"}
 
     autoencoder = load_model(model_path)
     frames = extract_frames(video_path)

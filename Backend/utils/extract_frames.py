@@ -8,7 +8,8 @@ def extract_frames(video_path):
         ret, frame = cap.read()
         if not ret:
             break
-        frame = cv2.resize(frame, (64, 64))
+        # Resize frames to 128x128 to match the saved autoencoder model input
+        frame = cv2.resize(frame, (128, 128))
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         frames.append(frame)
     cap.release()
