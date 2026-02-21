@@ -1,7 +1,7 @@
 # 🎥 Sentinel AI — Video Anomaly Narration Application  
 
 ## 🧠 Overview  
-**Sentinel AI** is a video anomaly detection and narration application.  
+**Sentinel AI** is a video anomaly detection and narration application
 Users can upload videos for **training** or **detection**:  
 - During **training**, the system learns normal video behavior using **Autoencoder** and **LSTM** models.  
 - During **detection**, it identifies any **anomalies** in the uploaded video and automatically generates a **narration** describing the detected anomalies.  
