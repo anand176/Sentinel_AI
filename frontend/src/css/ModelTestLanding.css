@@ -1,161 +1,153 @@
 .app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    justify-content: space-between;
-    font-family: Jost;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: inherit;
+  background: var(--game-bg);
+  background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255, 0, 170, 0.04) 0%, transparent 50%);
 }
 
-.top-container {
-    background-color: #021A5A;
-    color: white;
-    
-    text-align: left;
-    padding: 10px 20px;
-    flex: 0 0 40px; /* Increased height for better readability */
-}
-
-.bottom-container {
-    background-color: #021A5A;
-    flex: 0 0 30px; /* Very small bottom container */
-}
-
-/* New Model Test heading styling */
-/* .model-test-heading2 {
-    text-align: center;
-    margin: 20px 0px 0px 0px;
-    color: #021A5A;
-}
-
-.model-test-heading2 h2{
-    font-size: 35px;
-    margin-bottom: 0px;
-} */
-
-.uploadContainer {
-    width: 100%;
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-}
-
-.upload-container {
-    width: 80%;
-    max-width: 600px;
-    padding: 30px;
-    background-color: #f0f8ff; /* Matching narration box background */
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Similar shadow effect */
-    text-align: center;
-    border: 1px solid #ccc; /* Light border similar to narration container */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.upload-heading {
-    margin-bottom: 10px; /* Reduced margin for closeness */
-    color: #021A5A; /* Customize color of the heading */
-    font-size: 24px;
-}
-
-.instruction-text {
-    margin-bottom: 20px; /* Spacing for clarity */
-    font-size: 16px;
-    color: #333;
-}
-
-.upload-box {
-    width: 400px;
-    padding: 20px;
-    border: 2px dashed grey;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.upload-box p {
-    margin: 10px 0;
-}
-
-.upload-box.drag-active {
-    border-color:#00B15C;
-    background-color: rgba(0, 255, 0, 0.1);
-}
-
-.browse-files-btn {
-    display: inline-block;
-    background-color: #00B15C;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.browse-files-btn:hover {
-    background-color: #00B15C;
-}
-
-/* Styles for the Start Test button */
-.start-test-btn {
-    background-color: #00B15C;
-    color: white;
-    padding: 10px 40px;
-    border-radius: 50px; /* Makes the button oval */
-    cursor: pointer;
-    margin-top: 20px; /* Space between the box and the button */
-    border: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.start-test-btn:hover {
-    background-color: #00B15C;
-}
-
-.upload-message {
-    margin-top: 20px;
-    color: #ff0000;
-}
 .model-test-heading2 {
-    text-align: center;
-    margin: 20px 0;
-    color: #021A5A;
+  text-align: center;
+  margin: 0;
+  padding: 20px 0 0;
 }
 
 .model-test-heading2 h2 {
-    font-size: 28px; /* Adjust font size */
-    margin-bottom: 0px;
-    text-decoration: underline; /* Only use text-decoration for underline */
-    padding: 0;
-    line-height: 1.2; /* Ensures proper spacing */
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--neon-magenta);
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-shadow: 0 0 15px rgba(255, 0, 170, 0.3);
 }
 
-/* Highlight and bold selected file name */
+.uploadContainer {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.upload-container {
+  width: 100%;
+  max-width: 480px;
+  padding: 32px;
+  background: var(--game-surface);
+  border: 1px solid var(--game-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow-cyan-soft);
+  text-align: center;
+}
+
+.upload-heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.instruction-text {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0 0 24px;
+}
+
+.upload-box {
+  width: 100%;
+  padding: 32px 24px;
+  border: 2px dashed var(--game-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--game-bg-alt);
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.upload-box p {
+  margin: 6px 0;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+}
+
+.upload-box.drag-active {
+  border-color: var(--neon-magenta);
+  background: rgba(255, 0, 170, 0.04);
+  box-shadow: 0 0 30px rgba(255, 0, 170, 0.15);
+}
+
+.browse-files-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--neon-magenta) 0%, var(--neon-magenta-dim) 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 12px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  border: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.browse-files-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-magenta);
+}
+
 .file-name {
-    font-weight: bold;
-    font-size: 18px;
-  }
-  
-  .highlighted {
-    background-color: #e0f7fa; /* Light blue background */
-    padding: 5px;
-    border-radius: 4px;
-    display: inline-block;
-    color: #021A5A; /* Dark greenish text color */
-  }
-  
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 16px 0 0;
+}
 
+.highlighted {
+  background: rgba(255, 0, 170, 0.1);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 0, 170, 0.3);
+  display: inline-block;
+  color: var(--neon-magenta);
+}
 
+.start-test-btn {
+  background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dim) 100%);
+  color: var(--game-bg);
+  padding: 12px 32px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  margin-top: 24px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.start-test-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-green);
+}
+
+.start-test-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.upload-message {
+  margin-top: 16px;
+  font-size: 0.875rem;
+  color: var(--color-error);
+}

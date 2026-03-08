@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-import './../css/Progress.css'; // Importing the custom CSS
+import { Link, useNavigate } from 'react-router-dom';
+import './../css/Progress.css';
  
 const Progress = () => {
   const [progress, setProgress] = useState(0); // Initial progress value set to 0
@@ -28,9 +28,10 @@ const Progress = () => {
  
   return (
     <div className="app-container">
-      <div className='top-container'>
-      <h1>SentinelAI by Abilytics</h1>
-      </div>
+      <header className="app-shell-header">
+        <span className="app-shell-logo">SentinelAI</span>
+        <Link to="/">Back to Home</Link>
+      </header>
       <div className='training-box-container'>
       <div className="training-box">
         <h2 className="model-training">MODEL TRAINING</h2>
@@ -68,7 +69,7 @@ const Progress = () => {
         )}
       </div>
       </div>
-      <div className="bottom-container"></div>
+      <div className="app-shell-bottom" />
     </div>
   );
 };

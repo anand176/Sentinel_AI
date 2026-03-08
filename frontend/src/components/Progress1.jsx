@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import './../css/Progress1.css'; // Ensure this file has the correct styles
+import { Link, useNavigate } from 'react-router-dom';
+import './../css/Progress1.css';
 
 const Progress1 = () => {
   const [progress, setProgress] = useState(0); // Initial progress value set to 0
@@ -27,9 +27,10 @@ const Progress1 = () => {
 
   return (
     <div className="app-container">
-      <div className='top-container'>
-        <h1>SentinelAI by Abilytics</h1>
-      </div>
+      <header className="app-shell-header">
+        <span className="app-shell-logo">SentinelAI</span>
+        <Link to="/">Back to Home</Link>
+      </header>
       <div className='training-box-container'>
         <div className="training-box">
           <h2 className="model-training">MODEL TESTING</h2>
@@ -55,7 +56,7 @@ const Progress1 = () => {
           </div>
         </div>
       </div>
-      <div className="bottom-container"></div>
+      <div className="app-shell-bottom" />
     </div>
   );
 };

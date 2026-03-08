@@ -15,7 +15,7 @@ function LandingPage() {
   return (
     <div className="landing-page">
       <header className="header">
-        <h1>SentinelAI by Abilytics</h1>
+        <h1>SentinelAI</h1>
       </header>
  
       <section className="about-section">

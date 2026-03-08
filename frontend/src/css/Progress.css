@@ -1,148 +1,160 @@
-.model-training-container {
+.app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f0f2f5;
-  padding-top: 10px; /* Add padding to ensure the content doesn't overlap with the header */
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: inherit;
+  background: var(--game-bg);
+  background-image: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0, 255, 247, 0.04) 0%, transparent 50%);
 }
 
-.training-box-container{
-  width: 100%;
+.training-box-container {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  padding: 24px;
 }
- 
-.title {
-  position: fixed; /* This keeps the title bar fixed at the top */
-  top: 0;
-  left: 0;
-  width: 100%; /* Makes sure the bar stretches across the entire page */
-  color: white;
-  background-color: #00214d;
-  padding: 20px;
-  text-align: center;
-  font-size: 24px;
-  margin: 0;
-  z-index: 1000; /* Ensure the header is above all other content */
-}
- 
+
 .training-box {
-  background-color: white;
-  border-radius: 10px;
-  padding: 30px;
-  width: 450px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  background: var(--game-surface);
+  border: 1px solid var(--game-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow-cyan-soft);
   text-align: center;
-  justify-self: center;
-  align-self: center;
 }
- 
+
 .model-training {
-  font-size: 22px;
-  font-weight: bold;
-  color: #00214d;
-  margin-bottom: 30px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--neon-cyan);
+  margin: 0 0 28px;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 15px rgba(0, 255, 247, 0.3);
 }
- 
+
 .progress-container {
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
- 
+
 .progress-title {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
- 
+
 .progress-percentage {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(0, 255, 247, 0.4);
 }
- 
+
 .progress-bar-container {
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  height: 10px;
-  margin-bottom: 10px;
+  height: 14px;
+  background: var(--game-bg-alt);
+  border: 1px solid var(--game-border);
+  border-radius: var(--radius-full);
   overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
- 
+
 .progress-bar {
   height: 100%;
-  background-color: #ffac30;
-  transition: width 0.5s ease;
+  background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-green) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
 }
- 
-.progress-text {
-  margin-bottom: 10px;
-  color: #666;
-}
- 
+
 .estimated-time {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 20px;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
 }
- 
+
 .buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
 }
- 
-.resume-button, .stop-button {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
- 
+
+.resume-button,
 .stop-button {
-  background-color: #dc3545;
-}
- 
-.resume-button:disabled, .stop-button:disabled {
-  background-color: #888;
-  cursor: not-allowed;
-}
- 
-.resume-button:hover:not(:disabled), .stop-button:hover:not(:disabled) {
-  opacity: 0.9;
-}
- 
-.progress-complete {
-  color: #4CAF50;
-  font-size: 1rem;
-  margin-top: 10px;
-}
- 
-.checkmark {
-  color: #4CAF50;
-  font-weight: bold;
-  font-size: 1.5rem;
-}
- 
-.test-model-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
   padding: 10px 20px;
-  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.03em;
   cursor: pointer;
-  border-radius: 5px;
-  margin-top: 10px;
+  transition: transform var(--transition), box-shadow var(--transition);
 }
- 
+
+.resume-button {
+  background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dim) 100%);
+  color: var(--game-bg);
+}
+
+.stop-button {
+  background: linear-gradient(135deg, var(--color-error) 0%, #cc3344 100%);
+  color: white;
+}
+
+.resume-button:hover:not(:disabled),
+.stop-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.resume-button:hover:not(:disabled) {
+  box-shadow: var(--glow-green);
+}
+
+.progress-complete {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--neon-green);
+  margin: 12px 0 0;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+.checkmark {
+  color: var(--neon-green);
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.test-model-button {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dim) 100%);
+  color: var(--game-bg);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-top: 16px;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
 .test-model-button:hover {
-  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: var(--glow-green);
 }
-.bottom-container {
-  background-color: #021A5A;
-  flex: 0 0 30px; /* Very small bottom container */
-}
- 

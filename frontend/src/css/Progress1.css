@@ -1,148 +1,99 @@
-.model-training-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-    padding-top: 10px; /* Add padding to ensure the content doesn't overlap with the header */
-  }
-  
-  .training-box-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-  }
-   
-  .title {
-    position: fixed; /* This keeps the title bar fixed at the top */
-    top: 0;
-    left: 0;
-    width: 100%; /* Makes sure the bar stretches across the entire page */
-    color: white;
-    background-color: #00214d;
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    margin: 0;
-    z-index: 1000; /* Ensure the header is above all other content */
-  }
-   
-  .training-box {
-    background-color: white;
-    border-radius: 10px;
-    padding: 30px;
-    width: 450px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    justify-self: center;
-    align-self: center;
-  }
-   
-  .model-training {
-    font-size: 22px;
-    font-weight: bold;
-    color: #00214d;
-    margin-bottom: 30px;
-  }
-   
-  .progress-container {
-    margin-bottom: 30px;
-  }
-   
-  .progress-title {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-   
-  .progress-percentage {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-   
-  .progress-bar-container {
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    height: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-   
-  .progress-bar {
-    height: 100%;
-    background-color: #ffac30;
-    transition: width 0.5s ease;
-  }
-   
-  .progress-text {
-    margin-bottom: 10px;
-    color: #666;
-  }
-   
-  .estimated-time {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-   
-  .buttons {
-    display: flex;
-    justify-content: space-around;
-  }
-   
-  .resume-button, .stop-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-   
-  .stop-button {
-    background-color: #dc3545;
-  }
-   
-  .resume-button:disabled, .stop-button:disabled {
-    background-color: #888;
-    cursor: not-allowed;
-  }
-   
-  .resume-button:hover:not(:disabled), .stop-button:hover:not(:disabled) {
-    opacity: 0.9;
-  }
-   
-  .progress-complete {
-    color: #4CAF50;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
-   
-  .checkmark {
-    color: #4CAF50;
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
-   
-  .test-model-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-   
-  .test-model-button:hover {
-    background-color: #45a049;
-  }
-   
-.bottom-container {
-    background-color: #021A5A;
-    flex: 0 0 30px; /* Very small bottom container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: inherit;
+  background: var(--game-bg);
+  background-image: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255, 0, 170, 0.04) 0%, transparent 50%);
+}
+
+.training-box-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.training-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  background: var(--game-surface);
+  border: 1px solid var(--game-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow-cyan-soft);
+  text-align: center;
+}
+
+.model-training {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--neon-magenta);
+  margin: 0 0 28px;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 15px rgba(255, 0, 170, 0.3);
+}
+
+.progress-container {
+  margin-bottom: 0;
+}
+
+.progress-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.progress-percentage {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--neon-magenta);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(255, 0, 170, 0.4);
+}
+
+.progress-bar-container {
+  height: 14px;
+  background: var(--game-bg-alt);
+  border: 1px solid var(--game-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-magenta) 0%, var(--neon-cyan) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+  box-shadow: 0 0 15px rgba(255, 0, 170, 0.5);
+}
+
+.estimated-time {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.progress-complete {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--neon-green);
+  margin: 12px 0 0;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+.checkmark {
+  color: var(--neon-green);
+  font-weight: 700;
+  margin-left: 4px;
 }

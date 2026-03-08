@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './../css/video.css';  // Import custom CSS for styling
+import { Link } from 'react-router-dom';
+import './../css/video.css';
 
 function VideoNarration() {
   const [status, setStatus] = useState('');
@@ -44,22 +45,16 @@ function VideoNarration() {
     }
   }, []);
 
-  // Handle button click to test with another video
   const handleTestAnotherVideo = () => {
-    window.location.href = '/modeltestlanding';  // Redirect to the test page
-  };
-
-  // Handle button click to go back to the homepage
-  const handleBackToHome = () => {
-    window.location.href = '/';  // Redirect to the homepage
+    window.location.href = '/modeltestlanding';
   };
 
   return (
     <div className="app-container">
-      {/* Top container */}
-      <div className="top-container">
-        <h1>SentinelAI by Abilytics</h1>
-      </div>
+      <header className="app-shell-header">
+        <span className="app-shell-logo">SentinelAI</span>
+        <Link to="/">Back to Home</Link>
+      </header>
 
       {/* Anomaly Detection Heading */}
       <h2 className="anomaly-detection-heading">Anomaly Detection</h2>
@@ -90,14 +85,13 @@ function VideoNarration() {
           <button className="start-test-btn1" onClick={handleTestAnotherVideo}>
             Test with Another Video
           </button>
-          <button className="start-test-btn1" onClick={handleBackToHome}>
-            Back to Home Page
-          </button>
+          <Link to="/" className="btn-secondary">
+            Back to Home
+          </Link>
         </div>
       </div>
 
-      {/* Bottom container */}
-      <div className="bottom-container3"></div>
+      <div className="app-shell-bottom" />
     </div>
   );
 }

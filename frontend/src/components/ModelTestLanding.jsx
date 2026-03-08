@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';
 import './../css/ModelTestLanding.css';
 
 function App() {
@@ -94,10 +94,10 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Top container */}
-      <div className="top-container">
-        <h1>SentinelAI By Abilytics</h1>
-      </div>
+      <header className="app-shell-header">
+        <span className="app-shell-logo">SentinelAI</span>
+        <Link to="/">Back to Home</Link>
+      </header>
 
       {/* Heading for Model Test */}
       <div className="model-test-heading2">
@@ -148,8 +148,7 @@ function App() {
         </div>
       </div>
 
-      {/* Bottom container */}
-      <div className="bottom-container"></div>
+      <div className="app-shell-bottom" />
     </div>
   );
 }

@@ -1,158 +1,212 @@
-body {
-  font-family: 'Jost', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f7fa;
-}
- 
 .landing-page {
-  text-align: center;
-  /* padding: 20px; */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--game-bg);
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 255, 247, 0.06) 0%, transparent 50%);
 }
- 
-.header {
-  background-color: #021A5A;
-    color: white;
-    
-    text-align: left;
-    padding: 10px 20px;
-    flex: 0 0 40px;
+
+.landing-page .header {
+  height: var(--header-height);
+  background: linear-gradient(180deg, var(--game-surface-elevated) 0%, var(--game-surface) 100%);
+  border-bottom: 1px solid var(--game-border);
+  box-shadow: var(--glow-cyan-soft);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  flex-shrink: 0;
 }
- 
+
+.landing-page .header h1 {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 20px rgba(0, 255, 247, 0.4);
+}
+
 .about-section {
-  margin: 20px 0;
-}
- 
-.about-section h2 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #021A5A;
-}
- 
-.about-section p {
-  width: 60%;
+  padding: 48px 24px 32px;
+  max-width: 640px;
   margin: 0 auto;
-  color: #555;
-  font-size: 16px;
 }
- 
-/* Steps section */
+
+.about-section h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0 0 12px;
+  text-shadow: 0 0 10px rgba(0, 255, 247, 0.3);
+}
+
+.about-section p {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
 .steps-section {
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 80px 0;
+  align-items: flex-start;
+  padding: 24px;
+  margin-bottom: 48px;
 }
- 
+
 .steps-vertical {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
+  max-width: 440px;
+  width: 100%;
 }
- 
+
 .step {
-  display: flex;
-  margin-bottom: 0px; /* Spacing between steps */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background: var(--game-surface);
+  border: 1px solid var(--game-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
 }
- 
+
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-magenta));
+  opacity: 0.6;
+}
+
+.step:hover {
+  border-color: var(--game-border-glow);
+  box-shadow: var(--glow-cyan-soft);
+  transform: translateX(4px);
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
 .step-left {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 30px;
-  margin-top: 0px;
 }
- 
+
 .step-number {
-  font-size: 36px;
-  font-weight: bold;
-  color: #007CD8;
-  border: 3px solid #007CD8;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--game-surface-elevated);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 15px rgba(0, 255, 247, 0.2);
 }
- 
+
 .step-connector {
   width: 2px;
-  height: 100px; /* Adjust height of the dotted line */
-  background: repeating-linear-gradient(
-    180deg,
-    transparent,
-    transparent 4px,
-    #007CD8 4px,
-    #007CD8 8px
-  );
+  flex: 1;
+  min-height: 24px;
+  background: linear-gradient(180deg, var(--neon-cyan) 0%, transparent 100%);
+  opacity: 0.3;
+  margin-top: 8px;
 }
- 
-.bottom{
-  width: 35%; /* Adjust the width for the length of the horizontal line */
-  height: 2px; /* Set the height to 2px */
-  background: repeating-linear-gradient(
-    90deg, /* Change the direction to horizontal */
-    transparent,
-    transparent 4px,
-    #007CD8 4px,
-    #007CD8 8px
-  );
+
+.step:last-child .step-connector {
+  display: none;
 }
- 
- 
- 
+
 .step-right {
-  flex-grow: 1;
   text-align: left;
+  min-width: 0;
 }
- 
+
 .step-right h3 {
-  font-size: 20px;
-  color: #021A5A;
-  margin-top:10px;
- 
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 6px;
+  letter-spacing: 0.05em;
 }
- 
+
 .step-right p {
-  font-size: 14px;
-  color: #555;
-  margin: 20px 0;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0 0 16px;
 }
- 
-.btn {
-  background-color: #00B15C;
-  color: white;
-  padding: 10px 20px;
+
+.landing-page .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dim) 100%);
+  color: var(--game-bg);
+  padding: 10px 22px;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  transition: transform var(--transition), box-shadow var(--transition);
 }
- 
-.btn:hover {
-  background-color: #007E33;
+
+.landing-page .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-green);
 }
- 
-/* Adjust layout for smaller screens */
-@media (max-width: 768px) {
-  .steps-vertical {
-    width: 80%;
-  }
- 
+
+.landing-page .btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
   .step {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
- 
+
+  .step::before {
+    width: 100%;
+    height: 3px;
+  }
+
   .step-left {
-    margin-right: 0;
-    margin-bottom: 20px;
+    flex-direction: row;
+    gap: 12px;
   }
- 
+
   .step-connector {
-    height: 50px;
+    width: 24px;
+    min-height: 2px;
+    margin-top: 0;
+    margin-left: 0;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, transparent 100%);
   }
 }
- 
