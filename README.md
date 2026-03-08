@@ -26,7 +26,3 @@ This enables smart monitoring, helping users understand unusual patterns or acti
 
 <img width="1900" height="876" alt="image" src="https://github.com/user-attachments/assets/299b72e7-6180-4bb6-ba44-a5dc79ac707b" />
 
-
-
-https://github.com/user-attachments/assets/3a1203fb-6546-497b-966e-e5c7c84bf49e
-
