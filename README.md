@@ -19,6 +19,13 @@ This enables smart monitoring, helping users understand unusual patterns or acti
 ✅ Containerized using **Docker Compose** for seamless deployment  
 ✅ Scalable architecture supporting model retraining and multi-video processing  
 
+## Screenshots
+<img width="1900" height="859" alt="image" src="https://github.com/user-attachments/assets/7bab40c5-e3de-43b0-b994-22bd51c162d0" />
+
+<img width="1919" height="853" alt="image" src="https://github.com/user-attachments/assets/1d994300-b5e0-412b-b653-cf08f2f7c3d8" />
+
+<img width="1900" height="876" alt="image" src="https://github.com/user-attachments/assets/299b72e7-6180-4bb6-ba44-a5dc79ac707b" />
+
 
 
 https://github.com/user-attachments/assets/3a1203fb-6546-497b-966e-e5c7c84bf49e
