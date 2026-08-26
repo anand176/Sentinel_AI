@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentinel — signal preview</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Page-specific layout only — everything else (tokens, glass, chart marks)
+     comes from styles.css so this stays visually identical to the main site. */
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+
+  .preview-shell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 48px 24px;
+  }
+
+  .preview-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-nav);
+  }
+
+  .preview-back:hover { color: var(--accent-deep); }
+
+  .preview-head { text-align: center; max-width: 560px; }
+  .preview-head .kicker { display: block; }
+  .preview-head h1 { margin-top: 10px; font-size: clamp(24px, 4vw, 34px); }
+  .preview-head p { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--ink-body); }
+
+  .preview-window { width: 100%; max-width: 680px; }
+
+  /* This page has no cursor-parallax script, so the tilt just sits at its
+     resting angle rather than tracking the pointer. */
+  .tilt { transform: rotateX(9deg) rotateY(-4deg) scale(0.99); transform-style: preserve-3d; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="m-body" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#7DE3F7"/><stop offset="55%" stop-color="#15BCDF"/><stop offset="100%" stop-color="#0B7C95"/>
+  </linearGradient>
+  <radialGradient id="m-core" cx="40%" cy="35%" r="75%">
+    <stop offset="0%" stop-color="#F9A8D4"/><stop offset="100%" stop-color="#DB2777"/>
+  </radialGradient>
+  <symbol id="mark" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="19" fill="url(#m-body)"/>
+    <ellipse cx="18" cy="10" rx="30" ry="18" fill="#fff" opacity=".18"/>
+    <path d="M40,32 L51,32 A19,19 0 0,1 41.5,48.45 L36,38.93 Z" fill="#fff" opacity=".95"/>
+    <path d="M36,38.93 L41.5,48.45 A19,19 0 0,1 22.5,48.45 L28,38.93 Z" fill="#fff" opacity=".72"/>
+    <path d="M28,38.93 L22.5,48.45 A19,19 0 0,1 13,32 L24,32 Z" fill="#fff" opacity=".95"/>
+    <path d="M24,32 L13,32 A19,19 0 0,1 22.5,15.55 L28,25.07 Z" fill="#fff" opacity=".72"/>
+    <path d="M28,25.07 L22.5,15.55 A19,19 0 0,1 41.5,15.55 L36,25.07 Z" fill="#fff" opacity=".95"/>
+    <path d="M36,25.07 L41.5,15.55 A19,19 0 0,1 51,32 L40,32 Z" fill="#fff" opacity=".72"/>
+    <path d="M40,32 L36,38.93 L28,38.93 L24,32 L28,25.07 L36,25.07 Z" fill="url(#m-core)"/>
+    <rect x=".75" y=".75" width="62.5" height="62.5" rx="18.25" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.5"/>
+  </symbol>
+</defs></svg>
+
+<div class="preview-shell">
+  <a class="preview-back" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    Back to sentinel
+  </a>
+
+  <div class="preview-head">
+    <span class="kicker">Signal preview</span>
+    <h1>What the timeline chart looks like</h1>
+    <p>A worked example of the per-frame anomaly score Sentinel plots for every scan — flat while nothing unusual happens, then spiking the instant it does.</p>
+  </div>
+
+  <div class="preview-window">
+    <div class="tilt">
+      <div class="window">
+        <div class="chrome">
+          <i></i><i></i><i></i>
+          <span class="chrome-title">live monitor — camera 03</span>
+          <span class="chrome-status"><i></i>Analysing</span>
+        </div>
+        <div class="window-body">
+          <svg viewBox="0 0 640 200" role="img" aria-label="Anomaly score rising above the threshold, then a flagged detection.">
+            <defs>
+              <linearGradient id="d-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#15BCDF" stop-opacity=".24"/>
+                <stop offset="100%" stop-color="#15BCDF" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="d-threshold" x1="24" x2="616" y1="128.9" y2="128.9"/>
+            <text class="d-threshold-label" x="616" y="120.9" text-anchor="end">threshold</text>
+            <path class="d-area" fill="url(#d-fill)" d="M24,167.9 L36.1,164.7 L48.2,166.8 L60.3,162.6 L72.4,165.8 L84.5,163.7 L96.6,166.8 L108.7,164.7 L120.8,161.5 L132.9,165.8 L145,163.7 L157.1,164.7 L169.2,166.8 L181.3,162.6 L193.4,164.7 L205.5,165.8 L217.6,163.7 L229.7,160.5 L241.8,164.7 L253.9,162.6 L266,165.8 L278.1,163.7 L290.2,164.7 L302.3,161.5 L314.4,163.7 L326.5,164.7 L338.6,162.6 L350.7,165.8 L362.8,163.7 L374.9,164.7 L387,159.4 L399.1,146.7 L411.2,127.6 L423.3,107.5 L435.4,91.6 L447.5,99 L459.6,119.1 L471.7,139.2 L483.8,154 L495.9,161.5 L508,163.7 L520.1,164.7 L532.2,162.6 L544.3,165.8 L556.4,163.7 L568.5,161.5 L580.6,164.7 L592.7,163.7 L604.8,165.8 L616.9,162.6 L616,176 L24,176 Z"/>
+            <path class="d-line" d="M24,167.9 L36.1,164.7 L48.2,166.8 L60.3,162.6 L72.4,165.8 L84.5,163.7 L96.6,166.8 L108.7,164.7 L120.8,161.5 L132.9,165.8 L145,163.7 L157.1,164.7 L169.2,166.8 L181.3,162.6 L193.4,164.7 L205.5,165.8 L217.6,163.7 L229.7,160.5 L241.8,164.7 L253.9,162.6 L266,165.8 L278.1,163.7 L290.2,164.7 L302.3,161.5 L314.4,163.7 L326.5,164.7 L338.6,162.6 L350.7,165.8 L362.8,163.7 L374.9,164.7 L387,159.4 L399.1,146.7 L411.2,127.6 L423.3,107.5 L435.4,91.6 L447.5,99 L459.6,119.1 L471.7,139.2 L483.8,154 L495.9,161.5 L508,163.7 L520.1,164.7 L532.2,162.6 L544.3,165.8 L556.4,163.7 L568.5,161.5 L580.6,164.7 L592.7,163.7 L604.8,165.8 L616.9,162.6"/>
+            <circle class="d-flag" cx="435.4" cy="91.6" r="6"/>
+            <circle class="d-ring" cx="435.4" cy="91.6" r="6"/>
+          </svg>
+          <div class="narration">
+            <b>Narration</b>
+            <p>A person enters from the left and abruptly falls near the loading bay at 00:14.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

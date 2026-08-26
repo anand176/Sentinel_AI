@@ -81,7 +81,7 @@
 
   <div class="hero-actions">
     <button class="btn-cta" type="button" onclick="location.hash='#contact'">Get started <i></i></button>
-    <a class="btn-ghost" href="#demo">
+    <a class="btn-ghost" href="#demo" id="watch-demo-btn">
       <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"><path d="M0 0v16l14-8z"/></svg>
       Watch demo
     </a>
@@ -152,28 +152,17 @@
         <div class="window">
           <div class="chrome">
             <i></i><i></i><i></i>
-            <span class="chrome-title">live monitor — camera 03</span>
-            <span class="chrome-status"><i></i>Analysing</span>
+            <span class="chrome-title">sentinel — full walkthrough</span>
+            <span class="chrome-status"><i></i>2:00</span>
           </div>
-          <div class="window-body">
-            <svg viewBox="0 0 640 200" role="img" aria-label="Anomaly score rising above the threshold, then a flagged detection.">
-              <defs>
-                <linearGradient id="d-fill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#15BCDF" stop-opacity=".24"/>
-                  <stop offset="100%" stop-color="#15BCDF" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <line class="d-threshold" x1="24" x2="616" y1="128.9" y2="128.9"/>
-              <text class="d-threshold-label" x="616" y="120.9" text-anchor="end">threshold</text>
-              <path class="d-area" fill="url(#d-fill)" d="M24,167.9 L36.1,164.7 L48.2,166.8 L60.3,162.6 L72.4,165.8 L84.5,163.7 L96.6,166.8 L108.7,164.7 L120.8,161.5 L132.9,165.8 L145,163.7 L157.1,164.7 L169.2,166.8 L181.3,162.6 L193.4,164.7 L205.5,165.8 L217.6,163.7 L229.7,160.5 L241.8,164.7 L253.9,162.6 L266,165.8 L278.1,163.7 L290.2,164.7 L302.3,161.5 L314.4,163.7 L326.5,164.7 L338.6,162.6 L350.7,165.8 L362.8,163.7 L374.9,164.7 L387,159.4 L399.1,146.7 L411.2,127.6 L423.3,107.5 L435.4,91.6 L447.5,99 L459.6,119.1 L471.7,139.2 L483.8,154 L495.9,161.5 L508,163.7 L520.1,164.7 L532.2,162.6 L544.3,165.8 L556.4,163.7 L568.5,161.5 L580.6,164.7 L592.7,163.7 L604.8,165.8 L616.9,162.6 L616,176 L24,176 Z"/>
-              <path class="d-line" d="M24,167.9 L36.1,164.7 L48.2,166.8 L60.3,162.6 L72.4,165.8 L84.5,163.7 L96.6,166.8 L108.7,164.7 L120.8,161.5 L132.9,165.8 L145,163.7 L157.1,164.7 L169.2,166.8 L181.3,162.6 L193.4,164.7 L205.5,165.8 L217.6,163.7 L229.7,160.5 L241.8,164.7 L253.9,162.6 L266,165.8 L278.1,163.7 L290.2,164.7 L302.3,161.5 L314.4,163.7 L326.5,164.7 L338.6,162.6 L350.7,165.8 L362.8,163.7 L374.9,164.7 L387,159.4 L399.1,146.7 L411.2,127.6 L423.3,107.5 L435.4,91.6 L447.5,99 L459.6,119.1 L471.7,139.2 L483.8,154 L495.9,161.5 L508,163.7 L520.1,164.7 L532.2,162.6 L544.3,165.8 L556.4,163.7 L568.5,161.5 L580.6,164.7 L592.7,163.7 L604.8,165.8 L616.9,162.6"/>
-              <circle class="d-flag" cx="435.4" cy="91.6" r="6"/>
-              <circle class="d-ring" cx="435.4" cy="91.6" r="6"/>
-            </svg>
-            <div class="narration">
-              <b>Narration</b>
-              <p>A person enters from the left and abruptly falls near the loading bay at 00:14.</p>
-            </div>
+          <div class="video-embed">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/MlyEGCWJX9E"
+              title="Sentinel demo — video anomaly detection and narration"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen></iframe>
           </div>
         </div>
       </div>

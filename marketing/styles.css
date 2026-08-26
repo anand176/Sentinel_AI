@@ -274,6 +274,7 @@ a:hover { color: #000; }
 /* Demo window -------------------------------------------------------------- */
 .showcase { perspective: 1600px; }
 
+
 .tilt {
   transform:
     rotateX(calc(9deg + var(--my, 0) * 5deg))
@@ -313,6 +314,22 @@ a:hover { color: #000; }
 
 .window-body { padding: 22px; }
 .window-body svg { display: block; width: 100%; height: auto; }
+
+/* Real video embed inside the glass window — flush, no padding, so the
+   frame reads as a screen rather than a card with a video floating in it. */
+.video-embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
 
 .d-threshold { stroke: var(--danger); stroke-width: 1.5; stroke-dasharray: 5 4; opacity: .8; }
 .d-threshold-label { fill: var(--ink-body); font-family: var(--font); font-size: 11px; font-weight: 700; text-transform: uppercase; }
