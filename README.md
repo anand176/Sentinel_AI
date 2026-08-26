@@ -1,6 +1,6 @@
-# 🎥 Sentinel AI — Video Anomaly Narration Application  
+# Sentinel AI — Video Anomaly Narration Application  
 
-## 🧠 Overview  
+## Overview  
 **Sentinel AI** is a video anomaly detection and narration application
 Users can upload videos for **training** or **detection**:  
 - During **training**, the system learns normal video behavior using **Autoencoder** and **LSTM** models.  
@@ -10,14 +10,14 @@ This enables smart monitoring, helping users understand unusual patterns or acti
 
 ---
 
-## ⚙️ Features  
-✅ Upload videos for training or anomaly detection  
-✅ Uses **Autoencoder** and **LSTM** models for anomaly identification  
-✅ Automatically generates **narrations** for detected anomalies  
-✅ Interactive web interface built with **ReactJS**  
-✅ Backend powered by **Flask (Python)**  
-✅ Containerized using **Docker Compose** for seamless deployment  
-✅ Scalable architecture supporting model retraining and multi-video processing  
+## Features  
+- Upload videos for training or anomaly detection  
+- Uses **Autoencoder** and **LSTM** models for anomaly identification  
+- Automatically generates **narrations** for detected anomalies  
+- Interactive web interface built with **ReactJS**  
+- Backend powered by **Flask (Python)**  
+- Containerized using **Docker Compose** for seamless deployment  
+- Scalable architecture supporting model retraining and multi-video processing  
 
 ## Screenshots
 <img width="1901" height="860" alt="image" src="https://github.com/user-attachments/assets/ec400db2-15b6-415b-937b-36cdf8fd7255" />
