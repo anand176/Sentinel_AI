@@ -20,9 +20,11 @@ This enables smart monitoring, helping users understand unusual patterns or acti
 ✅ Scalable architecture supporting model retraining and multi-video processing  
 
 ## Screenshots
-<img width="1900" height="859" alt="image" src="https://github.com/user-attachments/assets/7bab40c5-e3de-43b0-b994-22bd51c162d0" />
+<img width="1901" height="860" alt="image" src="https://github.com/user-attachments/assets/ec400db2-15b6-415b-937b-36cdf8fd7255" />
 
-<img width="1919" height="853" alt="image" src="https://github.com/user-attachments/assets/1d994300-b5e0-412b-b653-cf08f2f7c3d8" />
+<img width="1897" height="863" alt="image" src="https://github.com/user-attachments/assets/74779c15-7416-45d4-8ecb-48d0b60ea4ca" />
 
-<img width="1900" height="876" alt="image" src="https://github.com/user-attachments/assets/299b72e7-6180-4bb6-ba44-a5dc79ac707b" />
+<img width="1900" height="797" alt="image" src="https://github.com/user-attachments/assets/1bd81c24-6858-45d2-8469-1f70c582e626" />
+<img width="1896" height="751" alt="image" src="https://github.com/user-attachments/assets/77ec3c44-d248-4969-ad46-3957866e5488" />
+
 
