@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="55%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+    <radialGradient id="core" cx="40%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#F9A8D4"/>
+      <stop offset="100%" stop-color="#DB2777"/>
+    </radialGradient>
+    <clipPath id="clip">
+      <rect width="64" height="64" rx="19"/>
+    </clipPath>
+  </defs>
+
+  <rect width="64" height="64" rx="19" fill="url(#body)"/>
+
+  <g clip-path="url(#clip)">
+    <ellipse cx="18" cy="10" rx="30" ry="18" fill="#FFFFFF" opacity="0.18"/>
+  </g>
+
+  <g>
+    <path d="M40,32 L51,32 A19,19 0 0,1 41.5,48.45 L36,38.93 Z" fill="#FFFFFF" opacity="0.95"/>
+    <path d="M36,38.93 L41.5,48.45 A19,19 0 0,1 22.5,48.45 L28,38.93 Z" fill="#FFFFFF" opacity="0.72"/>
+    <path d="M28,38.93 L22.5,48.45 A19,19 0 0,1 13,32 L24,32 Z" fill="#FFFFFF" opacity="0.95"/>
+    <path d="M24,32 L13,32 A19,19 0 0,1 22.5,15.55 L28,25.07 Z" fill="#FFFFFF" opacity="0.72"/>
+    <path d="M28,25.07 L22.5,15.55 A19,19 0 0,1 41.5,15.55 L36,25.07 Z" fill="#FFFFFF" opacity="0.95"/>
+    <path d="M36,25.07 L41.5,15.55 A19,19 0 0,1 51,32 L40,32 Z" fill="#FFFFFF" opacity="0.72"/>
+  </g>
+
+  <path d="M40,32 L36,38.93 L28,38.93 L24,32 L28,25.07 L36,25.07 Z" fill="url(#core)"/>
+
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="18.25" fill="none"
+        stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+</svg>

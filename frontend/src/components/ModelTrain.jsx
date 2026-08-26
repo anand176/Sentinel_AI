@@ -1,118 +1,99 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './../css/ModelTrain.css';
+import { useNavigate } from 'react-router-dom';
+import AppNav from './AppNav';
+import VideoDropzone from './VideoDropzone';
 
 function ModelTrain() {
-  const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [uploadMessage, setUploadMessage] = useState('');
-  const [fileName, setFileName] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
-  // Handle drag events
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setDragActive(false);
-    }
-  };
-
-  // Handle drop event (restricting to video files only)
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('video/'));
+  const handleFilesSelected = (files) => {
     if (files.length > 0) {
       setSelectedFiles(files);
-      setFileName(files[0].name);
+      setUploadMessage('');
     } else {
-      setUploadMessage('Please upload a valid video file');
+      setUploadMessage('Please choose a valid video file.');
     }
   };
 
-  // Handle manual file selection (restricting to video files only)
-  const handleFileSelection = (e) => {
-    const files = Array.from(e.target.files).filter(file => file.type.startsWith('video/'));
-    if (files.length > 0) {
-      setSelectedFiles(files);
-      setFileName(files[0].name);
-    } else {
-      setUploadMessage('Please upload a valid video file');
+  const handleStartTrain = async () => {
+    if (!selectedFiles || selectedFiles.length === 0) {
+      setUploadMessage('Please select a video file first.');
+      return;
     }
-  };
 
-  // Handle start train button click
-  const handleStartTrain = () => {
-    if (selectedFiles && selectedFiles.length > 0) {
+    const formData = new FormData();
+    formData.append('video', selectedFiles[0]);
+    formData.append('mode', 'train');
+
+    try {
       setIsProcessing(true);
-      setTimeout(() => {
-        navigate('/progress');  // Navigate to /progress after processing
-      }, 2000);
-    } else {
-      setUploadMessage('Please select a video file first');
+      const response = await fetch('http://127.0.0.1:5001/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        setUploadMessage(data.error || `Training failed to start: ${response.statusText}`);
+        return;
+      }
+
+      // Training runs in the background; the progress screen polls this job.
+      window.localStorage.setItem('trainJobId', data.job_id);
+      navigate('/progress');
+    } catch (err) {
+      setUploadMessage(
+        'Could not reach the detection service on port 5001. Is the backend running?'
+      );
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   return (
-    <div className="app-container">
-      <header className="app-shell-header">
-        <span className="app-shell-logo">SentinelAI</span>
-        <Link to="/">Back to Home</Link>
-      </header>
+    <div className="page">
+      <AppNav />
 
-      {/* Main container to center content */}
-      <div className="main-container">
-        <h2 className="model-train-heading">MODEL TRAIN</h2>
+      <div className="page-body page-body--narrow">
+        <header className="page-head">
+          <span className="page-eyebrow">Training</span>
+          <h1 className="page-title">Teach Sentinel what normal looks like</h1>
+          <p className="page-subtitle">
+            Upload routine footage from the camera you want to monitor. The model learns this
+            baseline and treats deviations from it as anomalies.
+          </p>
+        </header>
 
-        {/* Wrapping container for the Upload Data box */}
-        <div className="upload-container">
-          <h2 className="upload-heading">Upload Training Video</h2>
-          <p className="instruction-text">Supported formats: MP4, MOV, AVI, WebM.</p>
-          <div
-            className={`upload-box ${dragActive ? 'drag-active' : ''}`}
-            onDragEnter={handleDrag}
-            onDragOver={handleDrag}
-            onDragLeave={handleDrag}
-            onDrop={handleDrop}
-          >
-            <p>Drag & Drop your videos here</p>
-            <p>or</p>
-            <label htmlFor="file-upload" className="browse-files-btn">
-              Browse Files
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              accept="video/*"
-              multiple
-              onChange={handleFileSelection}
-              style={{ display: 'none' }}
-            />
+        <div className="card">
+          <div className="card-head">
+            <h2 className="card-title">Baseline footage</h2>
+            <p className="card-desc">One clear recording of ordinary activity works best.</p>
           </div>
 
-          {/* Display selected file name in bold and highlighted */}
-          {fileName && <p className="file-name highlighted">Uploaded File: {fileName}</p>}
+          <div className="card-pad">
+            <VideoDropzone
+              inputId="train-upload"
+              file={selectedFiles?.[0]}
+              onFilesSelected={handleFilesSelected}
+            />
 
-          {/* Start Training button */}
-          <button
-            className="start-train-btn"
-            onClick={handleStartTrain}
-            disabled={isProcessing}
-          >
-            {isProcessing ? 'Processing...' : 'Start Training'}
-          </button>
+            {uploadMessage && (
+              <div className="alert alert-danger mt-16">{uploadMessage}</div>
+            )}
 
-          {/* Message Display */}
-          {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
+            <button
+              className="btn btn-primary btn-block mt-24"
+              onClick={handleStartTrain}
+              disabled={isProcessing}
+            >
+              {isProcessing ? 'Starting training…' : 'Start training'}
+            </button>
+          </div>
         </div>
       </div>
-
-      <div className="app-shell-bottom" />
     </div>
   );
 }

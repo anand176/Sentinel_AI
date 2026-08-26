@@ -1,19 +1,22 @@
+# Only packages the code actually imports.
+# Removed torch, mediapipe, gradio, openai and matplotlib — nothing in this
+# backend imports them, and together they added several GB to the image.
+
+flask
+flask_cors
+
+# Model: keras ships inside tensorflow
 tensorflow
-mediapipe
-h5py
-scipy
 scikit-learn
-matplotlib
 numpy
-pandas
-protobuf
+h5py
+
+# Video / frames
+opencv-python
+
+# Narration
 google-genai
 python-dotenv
-flask
-openai
-gradio
-moviepy
-numpy
-opencv-python
-torch
-flask_cors
+
+# Used by models/train_lstm.py
+pandas

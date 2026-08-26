@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentinel — watching every frame so you don't</title>
+<meta name="description" content="Sentinel learns what normal looks like on your own footage, flags the frames that break the pattern, and explains what happened in a sentence.">
+<meta name="theme-color" content="#15BCDF">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Sentinel — video anomaly detection & narration">
+<meta property="og:description" content="Hours of tape become one paragraph worth reading.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Reusable mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="m-body" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#7DE3F7"/><stop offset="55%" stop-color="#15BCDF"/><stop offset="100%" stop-color="#0B7C95"/>
+  </linearGradient>
+  <radialGradient id="m-core" cx="40%" cy="35%" r="75%">
+    <stop offset="0%" stop-color="#F9A8D4"/><stop offset="100%" stop-color="#DB2777"/>
+  </radialGradient>
+  <symbol id="mark" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="19" fill="url(#m-body)"/>
+    <ellipse cx="18" cy="10" rx="30" ry="18" fill="#fff" opacity=".18"/>
+    <path d="M40,32 L51,32 A19,19 0 0,1 41.5,48.45 L36,38.93 Z" fill="#fff" opacity=".95"/>
+    <path d="M36,38.93 L41.5,48.45 A19,19 0 0,1 22.5,48.45 L28,38.93 Z" fill="#fff" opacity=".72"/>
+    <path d="M28,38.93 L22.5,48.45 A19,19 0 0,1 13,32 L24,32 Z" fill="#fff" opacity=".95"/>
+    <path d="M24,32 L13,32 A19,19 0 0,1 22.5,15.55 L28,25.07 Z" fill="#fff" opacity=".72"/>
+    <path d="M28,25.07 L22.5,15.55 A19,19 0 0,1 41.5,15.55 L36,25.07 Z" fill="#fff" opacity=".95"/>
+    <path d="M36,25.07 L41.5,15.55 A19,19 0 0,1 51,32 L40,32 Z" fill="#fff" opacity=".72"/>
+    <path d="M40,32 L36,38.93 L28,38.93 L24,32 L28,25.07 L36,25.07 Z" fill="url(#m-core)"/>
+    <rect x=".75" y=".75" width="62.5" height="62.5" rx="18.25" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.5"/>
+  </symbol>
+</defs></svg>
+
+<!-- ====================================================== Section — Hero -->
+<section class="hero" id="top">
+  <video class="hero-video" src="media/hero.mp4" autoplay muted loop playsinline preload="auto"></video>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="logo" href="#top">
+      <svg aria-hidden="true"><use href="#mark"/></svg>
+      <span>sentinel</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#top">Home</a>
+      <a href="#features">Features</a>
+      <a href="#demo">Demo</a>
+      <a href="#about">About</a>
+    </nav>
+    <button class="nav-contact" type="button" onclick="location.hash='#contact'">
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <rect x="0.7" y="0.7" width="15.6" height="11.6" rx="1.4"/><path d="M1 1.6 8.5 7.2 16 1.6"/>
+      </svg>
+      Contact us
+    </button>
+    <button class="burger" type="button" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile">
+    <a href="#top">Home</a><a href="#features">Features</a>
+    <a href="#demo">Demo</a><a href="#about">About</a><a href="#contact">Contact us</a>
+  </nav>
+
+  <div class="hero-copy">
+    <h1>
+      Watching<br>Every<br>Frame<br>
+      <span class="step">So</span>
+      <span class="step">You</span>
+      <span class="step accent">Don't</span>
+    </h1>
+  </div>
+
+  <div class="hero-actions">
+    <button class="btn-cta" type="button" onclick="location.hash='#contact'">Get started <i></i></button>
+    <a class="btn-ghost" href="#demo">
+      <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"><path d="M0 0v16l14-8z"/></svg>
+      Watch demo
+    </a>
+  </div>
+</section>
+
+<!-- ================================================== Section — Features -->
+<section class="section section--alt" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Capabilities</span>
+      <h2>Everything from<br><span class="step">Baseline to briefing</span></h2>
+      <p class="section-lede">One pipeline: learn the scene, score the footage, describe the exception.</p>
+    </div>
+
+    <div class="bento">
+      <article class="card card--featured">
+        <span class="orb orb--cyan">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20"/><circle cx="12" cy="12" r="4"/><path d="M2 12h2"/><path d="M20 12h2"/></svg>
+        </span>
+        <span class="card-meta">Autoencoder</span>
+        <h3>Baseline training</h3>
+        <p>Upload ordinary footage once. Sentinel learns the rhythm of your specific camera and scene, then records the error distribution that defines "normal" for it.</p>
+      </article>
+
+      <article class="card">
+        <span class="orb orb--pink"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></svg></span>
+        <span class="card-meta">Reconstruction error</span>
+        <h3>Frame-level detection</h3>
+        <p>Every frame is scored against that baseline — not against itself.</p>
+      </article>
+
+      <article class="card">
+        <span class="orb orb--violet"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg></span>
+        <span class="card-meta">Gemini vision</span>
+        <h3>Plain-language narration</h3>
+        <p>Flagged clips come back described in a sentence, so nobody scrubs tape.</p>
+      </article>
+
+      <article class="card">
+        <span class="orb orb--emerald"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg></span>
+        <span class="card-meta">Real time</span>
+        <h3>Live webcam monitor</h3>
+        <p>Point a camera at it and watch scores stream in against the threshold.</p>
+      </article>
+
+      <article class="card">
+        <span class="orb orb--amber"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+        <span class="card-meta">Per-frame scores</span>
+        <h3>Timeline analytics</h3>
+        <p>See exactly where a video broke pattern, and jump straight to it.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== Section — Demo -->
+<section class="section" id="demo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Watch demo</span>
+      <h2>The moment it<br><span class="step">Breaks pattern</span></h2>
+      <p class="section-lede">Scores stream in flat while nothing unusual happens. When the curve crosses the trained threshold, the frame is flagged and narrated.</p>
+    </div>
+
+    <div class="showcase">
+      <div class="tilt">
+        <div class="window">
+          <div class="chrome">
+            <i></i><i></i><i></i>
+            <span class="chrome-title">live monitor — camera 03</span>
+            <span class="chrome-status"><i></i>Analysing</span>
+          </div>
+          <div class="window-body">
+            <svg viewBox="0 0 640 200" role="img" aria-label="Anomaly score rising above the threshold, then a flagged detection.">
+              <defs>
+                <linearGradient id="d-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#15BCDF" stop-opacity=".24"/>
+                  <stop offset="100%" stop-color="#15BCDF" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line class="d-threshold" x1="24" x2="616" y1="128.9" y2="128.9"/>
+              <text class="d-threshold-label" x="616" y="120.9" text-anchor="end">threshold</text>
+              <path class="d-area" fill="url(#d-fill)" d="M24,167.9 L36.1,164.7 L48.2,166.8 L60.3,162.6 L72.4,165.8 L84.5,163.7 L96.6,166.8 L108.7,164.7 L120.8,161.5 L132.9,165.8 L145,163.7 L157.1,164.7 L169.2,166.8 L181.3,162.6 L193.4,164.7 L205.5,165.8 L217.6,163.7 L229.7,160.5 L241.8,164.7 L253.9,162.6 L266,165.8 L278.1,163.7 L290.2,164.7 L302.3,161.5 L314.4,163.7 L326.5,164.7 L338.6,162.6 L350.7,165.8 L362.8,163.7 L374.9,164.7 L387,159.4 L399.1,146.7 L411.2,127.6 L423.3,107.5 L435.4,91.6 L447.5,99 L459.6,119.1 L471.7,139.2 L483.8,154 L495.9,161.5 L508,163.7 L520.1,164.7 L532.2,162.6 L544.3,165.8 L556.4,163.7 L568.5,161.5 L580.6,164.7 L592.7,163.7 L604.8,165.8 L616.9,162.6 L616,176 L24,176 Z"/>
+              <path class="d-line" d="M24,167.9 L36.1,164.7 L48.2,166.8 L60.3,162.6 L72.4,165.8 L84.5,163.7 L96.6,166.8 L108.7,164.7 L120.8,161.5 L132.9,165.8 L145,163.7 L157.1,164.7 L169.2,166.8 L181.3,162.6 L193.4,164.7 L205.5,165.8 L217.6,163.7 L229.7,160.5 L241.8,164.7 L253.9,162.6 L266,165.8 L278.1,163.7 L290.2,164.7 L302.3,161.5 L314.4,163.7 L326.5,164.7 L338.6,162.6 L350.7,165.8 L362.8,163.7 L374.9,164.7 L387,159.4 L399.1,146.7 L411.2,127.6 L423.3,107.5 L435.4,91.6 L447.5,99 L459.6,119.1 L471.7,139.2 L483.8,154 L495.9,161.5 L508,163.7 L520.1,164.7 L532.2,162.6 L544.3,165.8 L556.4,163.7 L568.5,161.5 L580.6,164.7 L592.7,163.7 L604.8,165.8 L616.9,162.6"/>
+              <circle class="d-flag" cx="435.4" cy="91.6" r="6"/>
+              <circle class="d-ring" cx="435.4" cy="91.6" r="6"/>
+            </svg>
+            <div class="narration">
+              <b>Narration</b>
+              <p>A person enters from the left and abruptly falls near the loading bay at 00:14.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== Section — About -->
+<section class="about" id="about">
+  <div class="about-copy">
+    <h2>About<br><span class="step">Sentinel</span></h2>
+    <div class="about-panel">
+      <p>
+        Sentinel builds the anomaly-detection infrastructure modern security teams rely on.
+        From baseline training to frame-level scoring and plain-language narration, we make
+        sure nothing unusual slips past unreviewed. Thousands of hours of footage, zero surprises.
+      </p>
+    </div>
+    <div class="about-actions">
+      <a class="btn-cta" href="#contact">Learn more <i></i></a>
+    </div>
+  </div>
+
+  <div class="about-media">
+    <video src="media/about.mp4" autoplay muted loop playsinline preload="auto"></video>
+    <div class="about-tint" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- =================================================== Section — Contact -->
+<section class="section section--alt" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="kicker">Get in touch</span>
+      <h2>Put it in front of<br><span class="step">Your own footage</span></h2>
+      <p class="section-lede">
+        Tell us what you're monitoring and we'll walk you through training a baseline on your
+        cameras — including where this approach works well and where it doesn't.
+      </p>
+      <ul class="points">
+        <li>A walkthrough on your own footage, not a canned demo</li>
+        <li>Guidance on camera placement and baseline length</li>
+        <li>An honest read on whether this fits your use case</li>
+      </ul>
+    </div>
+
+    <form class="form" id="contact-form" novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Jordan Ellis" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="company">Organisation</label>
+          <input id="company" name="company" type="text" placeholder="Northgate Logistics" autocomplete="organization">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Work email <span class="req">*</span></label>
+        <input id="email" name="email" type="email" placeholder="jordan@northgate.com" autocomplete="email" aria-describedby="email-err">
+        <span class="err" id="email-err" role="alert"></span>
+      </div>
+
+      <div class="field">
+        <label for="message">What are you monitoring? <span class="req">*</span></label>
+        <textarea id="message" name="message" rows="4" placeholder="We run 40 cameras across three warehouses and want automatic review overnight." aria-describedby="message-err"></textarea>
+        <span class="err" id="message-err" role="alert"></span>
+      </div>
+
+      <div class="alert" id="form-alert" hidden></div>
+
+      <button class="btn-cta" type="submit" id="submit-btn" style="justify-content:center">Request a walkthrough <i></i></button>
+      <p class="fineprint">We only use your address to reply. No newsletter, no sharing.</p>
+    </form>
+
+    <div class="form success" id="contact-success" hidden role="status">
+      <span class="success-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <h3>Message received</h3>
+      <p id="success-text">We'll be in touch shortly.</p>
+      <button class="btn-ghost" type="button" id="reset-btn" style="margin-top:20px">Send another</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand"><svg aria-hidden="true"><use href="#mark"/></svg> sentinel</span>
+  <nav class="footer-links" aria-label="Footer">
+    <a href="#features">Features</a><a href="#demo">Demo</a>
+    <a href="#about">About</a><a href="#contact">Contact</a>
+  </nav>
+  <span class="footer-note">Video anomaly detection &amp; narration</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

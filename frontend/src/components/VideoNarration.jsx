@@ -1,97 +1,152 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './../css/video.css';
+import { useNavigate } from 'react-router-dom';
+import AppNav from './AppNav';
+import AnomalyTimeline from './AnomalyTimeline';
+import './../css/Results.css';
+
+const fmtTime = (sec) => {
+  if (!Number.isFinite(sec)) return '—';
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return m > 0 ? `${m}:${s.toFixed(0).padStart(2, '0')}` : `${s.toFixed(1)}s`;
+};
 
 function VideoNarration() {
+  const [result, setResult] = useState(null);
   const [status, setStatus] = useState('');
-  const [narration, setNarration] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
+  const navigate = useNavigate();
 
-  // Load the video and narration from the last detection result
   useEffect(() => {
-    setStatus('Loading detection result...');
     try {
       const stored = window.localStorage.getItem('anomalyResult');
       if (!stored) {
-        setStatus('No detection result found. Please run a test first.');
+        setStatus('No detection result found. Run a scan first.');
         return;
       }
-
       const data = JSON.parse(stored);
-
       if (data.error) {
         setStatus(data.error);
         return;
       }
-
-      if (data.narration) {
-        setNarration(data.narration);
-      }
-
-      if (data.clip_url) {
-        // Backend serves clips at /anomalous_clips/<filename> on port 5001
-        setVideoUrl(`http://127.0.0.1:5001${data.clip_url}`);
-      }
-
-      // Show status when no clip/narration (e.g. "No anomalies detected")
-      if (!data.narration && !data.clip_url && data.status) {
-        setStatus(data.status);
-      } else {
-        setStatus('');
-      }
+      setResult(data);
+      setStatus('');
     } catch (error) {
-      console.error('Error loading detection result:', error);
-      setStatus('Error loading detection result.');
+      setStatus('Could not read the detection result.');
     }
   }, []);
 
-  const handleTestAnotherVideo = () => {
-    window.location.href = '/modeltestlanding';
-  };
+  const videoUrl = result?.clip_url ? `http://127.0.0.1:5001${result.clip_url}` : '';
+  const detected = (result?.anomaly_count ?? 0) > 0;
 
   return (
-    <div className="app-container">
-      <header className="app-shell-header">
-        <span className="app-shell-logo">SentinelAI</span>
-        <Link to="/">Back to Home</Link>
-      </header>
+    <div className="page">
+      <AppNav />
 
-      {/* Anomaly Detection Heading */}
-      <h2 className="anomaly-detection-heading">Anomaly Detection</h2>
+      <div className="page-body">
+        <header className="page-head">
+          <span className="page-eyebrow">Detection</span>
+          <h1 className="page-title">Scan results</h1>
+          {result && (
+            <p className="page-subtitle">
+              {result.total_frames} frames analysed
+              {result.duration_sec ? ` · ${fmtTime(result.duration_sec)} of footage` : ''}
+              {result.segments?.length
+                ? ` · ${result.segments.length} flagged segment${result.segments.length === 1 ? '' : 's'}`
+                : ''}
+            </p>
+          )}
+        </header>
 
-      {/* Video and narration inside shadow container */}
-      <div className="video-shadow-container">
-        {videoUrl ? (
-          <div className="video-container">
-            <video width="500" controls>
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        ) : (
-          <div className="video-placeholder">
-            <p>&lt; ANOMALY VIDEO SNIPPET &gt;</p>
-          </div>
+        {status && <div className="alert alert-info">{status}</div>}
+
+        {result && (
+          <>
+            <section className="results-summary">
+              <article className="card card-pad stat-tile">
+                <span className="stat-tile-label">Frames flagged</span>
+                <span className="stat-tile-value">{result.anomaly_count}</span>
+                <span className="stat-tile-meta">
+                  {((result.anomaly_count / Math.max(result.total_frames, 1)) * 100).toFixed(2)}% of footage
+                </span>
+              </article>
+              <article className="card card-pad stat-tile">
+                <span className="stat-tile-label">Peak score</span>
+                <span className="stat-tile-value">{result.max_score?.toExponential(2)}</span>
+                <span className="stat-tile-meta">
+                  threshold {result.threshold?.toExponential(2)}
+                </span>
+              </article>
+              <article className="card card-pad stat-tile">
+                <span className="stat-tile-label">Verdict</span>
+                <span className="stat-tile-value">{detected ? 'Anomaly' : 'Clear'}</span>
+                <span className="stat-tile-meta">at {result.sigma}σ sensitivity</span>
+              </article>
+            </section>
+
+            <section className="card card-pad results-chart">
+              <AnomalyTimeline
+                scores={result.scores || []}
+                threshold={result.threshold || 0}
+                fps={result.fps || 30}
+                totalFrames={result.total_frames || 0}
+                segments={result.segments || []}
+              />
+            </section>
+          </>
         )}
-        {status && <p className="status-message">{status}</p>}
-        {narration && (
-          <div className="narration-result">
-            <p>{narration}</p>
-          </div>
-        )}
 
-        {/* Buttons */}
-        <div className="button-container">
-          <button className="start-test-btn1" onClick={handleTestAnotherVideo}>
-            Test with Another Video
+        <div className="results-grid">
+          <div className="card">
+            <div className="card-head run-head">
+              <div>
+                <h2 className="card-title">Flagged segment</h2>
+                <p className="card-desc">Extracted around the first anomalous frame</p>
+              </div>
+              {detected ? (
+                <span className="badge badge-warning">
+                  <span className="badge-dot" />
+                  Anomaly
+                </span>
+              ) : (
+                <span className="badge badge-success">
+                  <span className="badge-dot" />
+                  Clear
+                </span>
+              )}
+            </div>
+
+            <div className="card-pad">
+              {videoUrl ? (
+                <div className="clip-frame">
+                  <video controls src={videoUrl}>
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : (
+                <div className="clip-empty">
+                  {detected ? 'No clip was extracted for this scan.' : 'Nothing flagged — no clip needed.'}
+                </div>
+              )}
+
+              {result?.narration && (
+                <section className="narration mt-16">
+                  <h3 className="narration-label">Narration</h3>
+                  <p className="narration-text">{result.narration}</p>
+                </section>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="result-actions mt-24">
+          <button className="btn btn-primary btn-auto" onClick={() => navigate('/modeltestlanding')}>
+            Scan another video
           </button>
-          <Link to="/" className="btn-secondary">
-            Back to Home
-          </Link>
+          <button className="btn btn-secondary btn-auto" onClick={() => navigate('/dashboard')}>
+            View dashboard
+          </button>
         </div>
       </div>
-
-      <div className="app-shell-bottom" />
     </div>
   );
 }

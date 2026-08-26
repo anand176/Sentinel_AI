@@ -1,10 +1,16 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from models.train_autoencoder import train_model
+from werkzeug.utils import secure_filename
 from models.detect_anomaly import detect_anomalies
+from models.live_detect import start_session, stop_session, score_frame, narrate_session
+from models.train_jobs import start_training, get_job
 from utils.narration_client import get_gemini_video_narration
+from utils.video_utils import reencode_mp4_to_h264
+from utils import store
+import json
 import os
-import subprocess
+import re
+import uuid
 import cv2
 import numpy as np
 
@@ -14,6 +20,29 @@ UPLOAD_FOLDER = "uploads/uploaded_videos"
 ANOMALOUS_CLIPS_FOLDER = "uploads/anomalous_clips"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(ANOMALOUS_CLIPS_FOLDER, exist_ok=True)
+store.init_db()
+
+def safe_output_name(name, fallback_stem="clip"):
+    """Sanitise a client-supplied filename so it cannot escape its directory."""
+    cleaned = secure_filename(name or "")
+    if not cleaned:
+        # secure_filename returns "" for names that are entirely unsafe
+        # characters (e.g. "..", or a purely non-ASCII name).
+        cleaned = f"{fallback_stem}_{uuid.uuid4().hex}.mp4"
+    return cleaned
+
+def resolve_uploaded_video(candidate):
+    """
+    Resolve a client-supplied video path, confined to the uploads directory.
+    Returns None if the path escapes it or does not exist.
+    """
+    if not candidate:
+        return None
+    root = os.path.realpath(UPLOAD_FOLDER)
+    resolved = os.path.realpath(os.path.join(root, os.path.basename(candidate)))
+    if os.path.commonpath([root, resolved]) != root:
+        return None
+    return resolved if os.path.isfile(resolved) else None
 
 @app.route("/upload", methods=["POST"])
 def handle_upload():
@@ -23,15 +52,18 @@ def handle_upload():
     if not video or not mode:
         return jsonify({"error": "Missing video or mode"}), 400
 
-    path = os.path.join(UPLOAD_FOLDER, video.filename)
+    filename = safe_output_name(video.filename, fallback_stem="upload")
+    path = os.path.join(UPLOAD_FOLDER, filename)
     video.save(path)
 
     if mode == "train":
-        model_path = train_model(path)
-        return jsonify({"message": "Model trained successfully", "model_path": model_path})
+        # Training runs in the background; the client polls /train/status/<id>.
+        job_id = start_training(path, filename)
+        return jsonify({"job_id": job_id, "message": "Training started"}), 202
 
     elif mode == "detect":
-        result = detect_anomalies(path)
+        sigma = request.form.get("sigma", type=float)
+        result = detect_anomalies(path, sigma=sigma)
         # detect_anomaly returns "frames_with_anomaly", not "anomalies"
         anomaly_frames = result.get("frames_with_anomaly") or result.get("anomalies") or []
 
@@ -53,6 +85,22 @@ def handle_upload():
                 result["narration"] = f"Error generating narration: {str(e)}"
                 result["clip_url"] = None
 
+        if "error" not in result:
+            result["run_id"] = store.record_run(
+                kind="detect",
+                filename=filename,
+                status=result.get("status", "complete"),
+                total_frames=result.get("total_frames", 0),
+                anomaly_count=result.get("anomaly_count", 0),
+                threshold=result.get("threshold"),
+                max_score=result.get("max_score"),
+                mean_score=result.get("mean_score"),
+                calibrated=1 if result.get("calibrated") else 0,
+                narration=result.get("narration"),
+                clip_url=result.get("clip_url"),
+                scores_json=json.dumps(result.get("scores", [])),
+            )
+
         return jsonify(result)
 
     return jsonify({"error": "Invalid mode"}), 400
@@ -61,15 +109,18 @@ def handle_upload():
 def narrate_anomalies():
     
     try:
-        data = request.get_json()
-        video_path = data.get("video_path")
+        data = request.get_json(silent=True) or {}
         anomaly_frames = data.get("anomaly_frames", [])
-        fps = data.get("fps", 30)
-        output_filename = data.get("output_filename", "anomalous_clip.mp4")
-        
-        if not video_path or not os.path.exists(video_path):
+        output_filename = safe_output_name(
+            data.get("output_filename"), fallback_stem="anomalous_clip"
+        )
+
+        # Confined to the uploads directory: without this, any readable file on
+        # the server could be sent to the narration API.
+        video_path = resolve_uploaded_video(data.get("video_path"))
+        if not video_path:
             return jsonify({"error": "Video file not found"}), 400
-        
+
         if anomaly_frames:
             first_anomaly_frame = int(anomaly_frames[0])
             clip_path = extract_anomalous_clip(video_path, first_anomaly_frame, output_filename)
@@ -91,6 +142,119 @@ def narrate_anomalies():
     except Exception as e:
         return jsonify({"error": f"Narration generation failed: {str(e)}"}), 500
 
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$")
+
+@app.route("/contact", methods=["POST"])
+def contact():
+    data = request.get_json(silent=True) or {}
+    email = (data.get("email") or "").strip()
+    name = (data.get("name") or "").strip()
+    company = (data.get("company") or "").strip()
+    message = (data.get("message") or "").strip()
+
+    if not EMAIL_RE.match(email):
+        return jsonify({"error": "Please provide a valid email address."}), 400
+    if not message:
+        return jsonify({"error": "Please include a message."}), 400
+
+    # Cap stored lengths so a large paste cannot bloat the database
+    contact_id = store.record_contact(
+        name[:120], email[:200], company[:120], message[:4000]
+    )
+    return jsonify({"id": contact_id, "message": "Thanks — we'll be in touch."}), 201
+
+@app.route("/train/status/<job_id>", methods=["GET"])
+def train_status(job_id):
+    job = get_job(job_id)
+    if not job:
+        return jsonify({"error": "Unknown or expired job"}), 404
+
+    if job["state"] == "complete" and not job.get("recorded"):
+        # Persist the finished run once, so it appears in the dashboard.
+        calibration = job.get("calibration") or {}
+        store.record_run(
+            kind="train",
+            filename=job.get("filename", "unknown"),
+            status="complete",
+            total_frames=calibration.get("frames", 0),
+            threshold=calibration.get("threshold"),
+            calibrated=1,
+        )
+        job["recorded"] = True
+
+    return jsonify(job)
+
+@app.route("/runs", methods=["GET"])
+def list_runs():
+    limit = request.args.get("limit", default=20, type=int)
+    return jsonify({"runs": store.list_runs(limit=max(1, min(limit, 100)))})
+
+@app.route("/runs/<int:run_id>", methods=["GET"])
+def get_run(run_id):
+    run = store.get_run(run_id)
+    if not run:
+        return jsonify({"error": "Run not found"}), 404
+    return jsonify(run)
+
+@app.route("/stats", methods=["GET"])
+def stats():
+    payload = store.get_stats()
+
+    # Whether a calibrated baseline exists drives the dashboard's model tile.
+    from models.detect_anomaly import get_autoencoder, load_calibration
+    _, model_path = get_autoencoder()
+    calibration = load_calibration(model_path) if model_path else None
+    payload["model"] = {
+        "trained": bool(model_path),
+        "calibrated": bool(calibration),
+        "threshold": calibration.get("threshold") if calibration else None,
+        "trained_at": calibration.get("trained_at") if calibration else None,
+        "frames": calibration.get("frames") if calibration else None,
+    }
+    return jsonify(payload)
+
+@app.route("/live/start", methods=["POST"])
+def live_start():
+    session_id = start_session()
+    return jsonify({"session_id": session_id})
+
+@app.route("/live/frame", methods=["POST"])
+def live_frame():
+    data = request.get_json(silent=True) or {}
+    session_id = data.get("session_id")
+    image = data.get("image")
+
+    if not session_id or not image:
+        return jsonify({"error": "Missing session_id or image"}), 400
+
+    result = score_frame(session_id, image)
+    return jsonify(result), (400 if "error" in result else 200)
+
+@app.route("/live/narrate", methods=["POST"])
+def live_narrate():
+    data = request.get_json(silent=True) or {}
+    session_id = data.get("session_id")
+
+    if not session_id:
+        return jsonify({"error": "Missing session_id"}), 400
+
+    result = narrate_session(session_id, ANOMALOUS_CLIPS_FOLDER)
+    if "error" not in result:
+        status = 200
+    elif result["error"] == "cooldown":
+        status = 429
+    else:
+        status = 400
+    return jsonify(result), status
+
+@app.route("/live/stop", methods=["POST"])
+def live_stop():
+    data = request.get_json(silent=True) or {}
+    session_id = data.get("session_id")
+    if session_id:
+        stop_session(session_id)
+    return jsonify({"status": "stopped"})
+
 @app.route("/anomalous_clips/<filename>", methods=["GET"])
 def serve_anomalous_clip(filename):
     
@@ -99,30 +263,6 @@ def serve_anomalous_clip(filename):
         return send_from_directory(ANOMALOUS_CLIPS_FOLDER, filename)
     except Exception as e:
         return jsonify({"error": f"Failed to serve clip: {str(e)}"}), 404
-
-def _reencode_mp4_to_h264(input_path):
-    """Re-encode MP4 to H.264 so browsers can play it (OpenCV mp4v often does not)."""
-    if not os.path.isfile(input_path):
-        return False
-    tmp_path = input_path + ".h264.mp4"
-    try:
-        subprocess.run([
-            "ffmpeg", "-y", "-i", input_path,
-            "-c:v", "libx264", "-preset", "fast", "-crf", "23",
-            "-movflags", "+faststart",
-            "-pix_fmt", "yuv420p",
-            tmp_path
-        ], check=True, capture_output=True, timeout=120)
-        os.replace(tmp_path, input_path)
-        return True
-    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired) as e:
-        if os.path.exists(tmp_path):
-            try:
-                os.remove(tmp_path)
-            except OSError:
-                pass
-        print(f"Re-encode to H.264 skipped or failed: {e}")
-        return False
 
 def extract_anomalous_clip(video_path, first_anomaly_frame, output_filename,
                           context_sec_before=1.5, clip_duration_sec=6.0):
@@ -182,7 +322,7 @@ def extract_anomalous_clip(video_path, first_anomaly_frame, output_filename,
             return None
 
         # Re-encode to H.264 so browsers can play the clip (OpenCV mp4v is often not playable)
-        _reencode_mp4_to_h264(output_path)
+        reencode_mp4_to_h264(output_path)
 
         print(f"Anomalous clip extracted: {output_path} ({frame_count} frames @ {fps:.1f} fps)")
         return output_path
@@ -191,5 +331,8 @@ def extract_anomalous_clip(video_path, first_anomaly_frame, output_filename,
         return None
 
 if __name__ == "__main__":
-    # Run on port 5001 to match Docker and docker-compose.yml
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    # Run on port 5001 to match Docker and docker-compose.yml.
+    # debug is opt-in: the Werkzeug debugger allows remote code execution,
+    # so it must never default to on while binding 0.0.0.0.
+    debug = os.getenv("FLASK_DEBUG", "").lower() in ("1", "true", "yes")
+    app.run(debug=debug, host="0.0.0.0", port=5001, threaded=True)

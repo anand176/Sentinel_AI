@@ -1,0 +1,112 @@
+.live-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* .run-head, .clip-frame and .narration-text are shared — see index.css. */
+
+/* Camera feed — recessed into the clay, so the video sits in a well ------- */
+.live-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  box-shadow: var(--shadow-clay-pressed);
+  transition: box-shadow var(--transition-slow), transform var(--transition-slow);
+}
+
+/* Anomaly reads as the whole panel swelling + a rose rim glow,
+   not just a border colour change. */
+.live-frame.is-anomaly {
+  transform: scale(1.015);
+  box-shadow:
+    0 0 0 6px rgba(190, 18, 60, 0.18),
+    0 18px 40px rgba(190, 18, 60, 0.28),
+    inset 6px 6px 14px rgba(190, 18, 60, 0.12);
+}
+
+.live-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-md);
+  transform: scaleX(-1); /* mirror the selfie view */
+}
+
+.live-idle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+}
+
+.live-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Signal orbs ------------------------------------------------------------- */
+.stat-orbs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat-orb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  aspect-ratio: 1;
+  padding: 12px;
+  text-align: center;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-solid);
+  box-shadow: var(--shadow-clay-card);
+  animation: clay-breathe 6s ease-in-out infinite;
+}
+
+.stat-orb:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.stat-orb-label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.stat-orb-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.stat-note {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .live-layout {
+    grid-template-columns: 1fr;
+  }
+}

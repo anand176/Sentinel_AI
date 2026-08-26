@@ -1,38 +1,41 @@
 // src/App.js
+//
+// The product UI only. The marketing site is a separate static app in
+// ../../marketing — it deploys and versions independently.
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './components/LandingPage'; // Import the LandingPage component
-import ModelTestNo from './components/ModelTestNo'; // Import the ModelTestNo component
-import Progress from './components/Progress';
-import ModelTrainLanding from './components/ModelTrain';
+import Dashboard from './components/Dashboard';
+import ModelTrain from './components/ModelTrain';
 import ModelTestLanding from './components/ModelTestLanding';
-// import video from './components/VideoNarration'; // Import the VideoNarration component
+import ModelTestNo from './components/ModelTestNo';
+import Progress from './components/Progress';
 import VideoNarration from './components/VideoNarration';
-
-import Progress1 from './components/Progress1';
+import LiveDetection from './components/LiveDetection';
+import ClayBackdrop from './components/ClayBackdrop';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Route for the Landing Page */}
-        <Route path="/" element={<LandingPage />} />
+      {/* Fixed-position ambient blobs shared by every route */}
+      <ClayBackdrop />
 
-        {/* Route for the Model Test page */}
+      <Routes>
+        {/* The app opens on the dashboard; /dashboard stays as an alias so
+            existing links and the marketing site's CTA keep working. */}
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Training */}
+        <Route path="/modeltrainlanding" element={<ModelTrain />} />
+        <Route path="/progress" element={<Progress />} />
+
+        {/* Detection on an uploaded file */}
+        <Route path="/modeltestlanding" element={<ModelTestLanding />} />
+        <Route path="/video" element={<VideoNarration />} />
         <Route path="/modeltestno" element={<ModelTestNo />} />
 
-        <Route path="/progress" element={<Progress />} />
-
-        <Route path="/modeltrainlanding" element={<ModelTrainLanding />} />
-
-        <Route path="/modeltestlanding" element={<ModelTestLanding />} />
-
-        {/* Route for Video Narration */}
-        <Route path="/video" element={<VideoNarration />} />
-        <Route path="/progress" element={<Progress />} />
-        <Route path="/progress1" element={<Progress1 />} />
-        
-
+        {/* Live webcam detection */}
+        <Route path="/live" element={<LiveDetection />} />
       </Routes>
     </Router>
   );

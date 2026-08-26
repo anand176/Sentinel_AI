@@ -1,0 +1,10 @@
+{
+  "mean": 0.002058703452348709,
+  "std": 0.0002691387780942023,
+  "sigma": 2.0,
+  "threshold": 0.0025969810085371137,
+  "frames": 3034,
+  "epochs": 20,
+  "source_video": "Video_Project_8.mp4",
+  "trained_at": 1787740528.7732882
+}

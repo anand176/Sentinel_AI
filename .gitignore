@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+# (unanchored, so these match at any depth — e.g. frontend/node_modules)
+node_modules/
 /.pnp
 .pnp.js
 
@@ -9,7 +10,18 @@
 /coverage
 
 # production
-/build
+build/
+
+# python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# runtime artefacts
+Backend/uploads/uploaded_videos/*
+Backend/uploads/anomalous_clips/*
+!Backend/uploads/**/.gitkeep
 
 # misc
 .DS_Store

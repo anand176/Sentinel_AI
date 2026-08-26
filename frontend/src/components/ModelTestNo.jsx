@@ -1,26 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './../css/ModelTestNo.css';
+import { useNavigate } from 'react-router-dom';
+import AppNav from './AppNav';
 
-function ModelTest() {
+function ModelTestNo() {
+  const navigate = useNavigate();
+
   return (
-    <div className="model-test-page">
-      <header className="app-shell-header">
-        <span className="app-shell-logo">SentinelAI</span>
-        <Link to="/">Back to Home</Link>
-      </header>
+    <div className="page">
+      <AppNav />
 
-      <section className="model-test-section">
-        <h2 className="section-title">MODEL TEST</h2>
-        <div className="test-result-box">
-          <h3 className="result-message">No Anomaly Detected</h3>
-          <Link to="/modeltestlanding" className="test-button">Test with another video</Link>
+      <div className="page-body page-body--narrow">
+        <header className="page-head">
+          <span className="page-eyebrow">Detection</span>
+          <h1 className="page-title">Scan results</h1>
+        </header>
+
+        <div className="card card-pad">
+          <span className="badge badge-success">
+            <span className="badge-dot" />
+            All clear
+          </span>
+          <h2 className="card-title mt-16">No anomalies detected</h2>
+          <p className="page-subtitle">
+            Every frame in this recording matched the learned baseline.
+          </p>
+
+          <div className="result-actions mt-24">
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate('/modeltestlanding')}
+            >
+              Scan another video
+            </button>
+            <button className="btn btn-secondary" onClick={() => navigate('/')}>
+              Back to overview
+            </button>
+          </div>
         </div>
-      </section>
-
-      <div className="app-shell-bottom" />
+      </div>
     </div>
   );
 }
 
-export default ModelTest;
+export default ModelTestNo;

@@ -1,0 +1,245 @@
+.dash-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Hero figure — exactly one per view ------------------------------------- */
+.dash-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.dash-hero-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.dash-hero-value {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 4.25rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  /* proportional figures: tabular-nums makes large numbers look loose */
+}
+
+.dash-hero-meta {
+  display: block;
+  margin-top: 10px;
+  font-size: 14.5px;
+  color: var(--color-text-muted);
+}
+
+/* Sparkline --------------------------------------------------------------- */
+.sparkline {
+  flex-shrink: 0;
+}
+
+.sparkline-line {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.sparkline-area {
+  fill: var(--color-primary);
+  opacity: 0.1;
+}
+
+.sparkline-dot {
+  fill: var(--color-primary);
+  stroke: var(--color-surface-solid);
+  stroke-width: 2;
+}
+
+/* KPI row ----------------------------------------------------------------- */
+.dash-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-tile-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.stat-tile-value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.stat-tile-meta {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+}
+
+/* Calibration warning -----------------------------------------------------
+   A banner, not a paragraph: the action is a sibling of the text, so the
+   button never flows inline mid-sentence. */
+.dash-warning {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
+  padding: 20px 24px;
+  border-left: 4px solid var(--color-warning);
+}
+
+.dash-warning-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+}
+
+.dash-warning-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-warning-title {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--color-warning);
+}
+
+.dash-warning-text {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.dash-warning-action {
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 14.5px;
+}
+
+/* Runs table -------------------------------------------------------------- */
+.dash-table-wrap {
+  overflow-x: auto;
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dash-table th,
+.dash-table td {
+  padding: 14px 24px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.dash-table th {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid rgba(150, 165, 190, 0.22);
+}
+
+.dash-table tbody tr + tr td {
+  border-top: 1px solid rgba(150, 165, 190, 0.16);
+}
+
+.dash-file {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.dash-num {
+  font-variant-numeric: tabular-nums;   /* aligned in a column */
+}
+
+.dash-muted {
+  color: var(--color-text-muted);
+}
+
+.dash-chip {
+  padding: 4px 10px;
+  font-size: 12px;
+  box-shadow: none;
+  border: 1px solid rgba(150, 165, 190, 0.28);
+}
+
+.dash-empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+}
+
+@media (max-width: 900px) {
+  .dash-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .dash-warning {
+    flex-wrap: wrap;
+  }
+
+  .dash-warning-body {
+    /* Text takes the full row; the action drops beneath it rather than
+       being crushed against the edge. */
+    flex-basis: calc(100% - 60px);
+  }
+
+  .dash-warning-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .dash-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-table th,
+  .dash-table td {
+    padding: 12px 16px;
+  }
+}

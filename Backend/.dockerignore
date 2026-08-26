@@ -1,0 +1,21 @@
+# Local virtualenv — dependencies are installed inside the image from
+# requirements.txt, so shipping this adds ~1.3GB to the build context.
+.venv/
+venv/
+env/
+
+__pycache__/
+*.pyc
+*.pyo
+
+# Runtime artefacts (bind-mounted by docker-compose)
+uploads/uploaded_videos/
+uploads/anomalous_clips/
+*.db
+
+# Secrets never belong in an image layer
+.env
+
+.git/
+.gitignore
+*.md

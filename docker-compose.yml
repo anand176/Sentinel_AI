@@ -1,18 +1,25 @@
-version: "3.8"
-
 services:
   backend:
-    build: ./backend
+    build: ./Backend
     container_name: sentinel_backend
     ports:
       - "5001:5001"
     volumes:
-      - ./backend/uploads:/app/uploads
-      - ./backend/models/saved_models:/app/models/saved_models
+      - ./Backend/uploads:/app/uploads
+      - ./Backend/models/saved_models:/app/models/saved_models
+    # Reads Backend/.env directly, so the same file serves both `python app.py`
+    # and Docker. Optional: the stack still starts without it (narration is the
+    # only feature that needs the key).
+    env_file:
+      - path: ./Backend/.env
+        required: false
     environment:
       - FLASK_ENV=development
-      - GOOGLE_API_KEY=your_google_api_key_here
-    restart: always
+      # GEMINI_API_KEY is deliberately NOT listed here: `environment` overrides
+      # `env_file`, so an unset host variable would blank out the value from
+      # Backend/.env. Use the bare `- GEMINI_API_KEY` form only if you want a
+      # host-exported key to win.
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
@@ -21,4 +28,13 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    restart: always
+    restart: unless-stopped
+
+  # Static marketing site — deliberately independent of the React app so it can
+  # be deployed, cached and edited on its own.
+  marketing:
+    build: ./marketing
+    container_name: sentinel_marketing
+    ports:
+      - "8080:80"
+    restart: unless-stopped

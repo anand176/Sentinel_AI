@@ -1,0 +1,64 @@
+/* Detection results + narration display.
+   .run-head, .clip-frame, .narration-text and .result-actions are shared —
+   see index.css. */
+
+.results-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.results-chart {
+  margin-bottom: 16px;
+}
+
+.results-grid {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .results-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.clip-empty {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: 24px;
+  text-align: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  box-shadow: var(--shadow-clay-pressed);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.narration {
+  padding: 24px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-solid);
+  box-shadow: var(--shadow-clay-card);
+}
+
+.narration-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary-text);
+}
+
+.narration .narration-text {
+  margin-top: 10px;
+}
+
+@media (max-width: 700px) {
+  .result-actions .btn {
+    width: 100%;
+  }
+}

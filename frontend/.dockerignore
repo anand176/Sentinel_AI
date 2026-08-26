@@ -1,0 +1,14 @@
+# Installed inside the image by `npm install` — shipping it adds ~293MB
+# to the build context and risks platform-specific binaries leaking in.
+node_modules/
+
+# Rebuilt inside the image by `npm run build`
+build/
+
+.git/
+.gitignore
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env.local
+coverage/
