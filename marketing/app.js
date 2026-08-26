@@ -117,6 +117,53 @@
     });
   }
 
+  /* ===================================================== Back-to-top ring
+     The ring's stroke-dashoffset encodes how far through the page the
+     viewer is — full offset (empty ring) at the top, zero offset (full
+     ring) at the bottom. Scroll handling is throttled to one rAF at a
+     time, same pattern as the parallax listener above.
+     ===================================================================== */
+  var scrollBtn = document.getElementById('scrolltop');
+  var progressRing = document.getElementById('scrolltop-progress');
+  var RING_CIRCUMFERENCE = 119.4; // 2 * PI * r, r=19 — matches styles.css
+  var SHOW_AFTER_PX = 320;
+
+  if (scrollBtn && progressRing) {
+    var scrollPending = false;
+
+    function updateScrollProgress() {
+      scrollPending = false;
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop;
+      var scrollable = doc.scrollHeight - doc.clientHeight;
+      var fraction = scrollable > 0 ? Math.min(1, Math.max(0, scrollTop / scrollable)) : 0;
+
+      progressRing.style.strokeDashoffset = (RING_CIRCUMFERENCE * (1 - fraction)).toFixed(2);
+      scrollBtn.classList.toggle('is-visible', scrollTop > SHOW_AFTER_PX);
+    }
+
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (!scrollPending) {
+          scrollPending = true;
+          window.requestAnimationFrame(updateScrollProgress);
+        }
+      },
+      { passive: true }
+    );
+
+    scrollBtn.hidden = false; // becomes visible via .is-visible once scrolled
+    updateScrollProgress(); // correct state on load if the page opens mid-scroll (e.g. a hash link)
+
+    scrollBtn.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: reduceMotion.matches ? 'auto' : 'smooth',
+      });
+    });
+  }
+
   /* ============================================================== Contact */
   var API_BASE =
     window.SENTINEL_API || window.location.protocol + '//' + window.location.hostname + ':5001';

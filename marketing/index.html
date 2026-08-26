@@ -259,6 +259,18 @@
   <span class="footer-note">Video anomaly detection &amp; narration</span>
 </footer>
 
+<!-- Back-to-top: the ring fills as you scroll down the page, then reverses
+     as you scroll back up — it always shows how far through the page you are. -->
+<button class="scrolltop" id="scrolltop" type="button" aria-label="Back to top" hidden>
+  <svg class="scrolltop-ring" viewBox="0 0 44 44" aria-hidden="true">
+    <circle class="scrolltop-track" cx="22" cy="22" r="19"/>
+    <circle class="scrolltop-progress" id="scrolltop-progress" cx="22" cy="22" r="19"/>
+  </svg>
+  <svg class="scrolltop-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5M5 12l7-7 7 7"/>
+  </svg>
+</button>
+
 <script src="app.js"></script>
 </body>
 </html>

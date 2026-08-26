@@ -497,4 +497,74 @@ a:hover { color: #000; }
   .d-area, .d-flag, .narration { opacity: 1; animation: none; transform: none; }
   .d-ring { display: none; }
   .btn-cta:hover, .btn-ghost:hover, .card:hover { transform: none; }
+  .scrolltop { transition: none; }
+  .scrolltop:hover { transform: none; }
+}
+
+/* ==========================================================================
+   Back-to-top ring
+   ========================================================================== */
+.scrolltop {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  color: var(--accent-deep);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease, box-shadow 200ms ease;
+}
+
+.scrolltop.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.scrolltop:hover { box-shadow: var(--glass-shadow-lg); }
+
+.scrolltop[hidden] { display: none; }
+
+.scrolltop-ring {
+  position: absolute;
+  inset: 0;
+  width: 52px;
+  height: 52px;
+  transform: rotate(-90deg); /* progress starts at 12 o'clock */
+}
+
+.scrolltop-track {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 3;
+}
+
+.scrolltop-progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  /* circumference of r=19 ≈ 119.4 — dasharray/offset set inline by app.js */
+  stroke-dasharray: 119.4;
+  stroke-dashoffset: 119.4;
+  transition: stroke-dashoffset 80ms linear;
+}
+
+.scrolltop-arrow {
+  position: relative;
+  width: 18px;
+  height: 18px;
 }
